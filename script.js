@@ -54,6 +54,10 @@ function stripHtml(html) {
   return tmp.textContent || tmp.innerText || '';
 }
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 // ── SUBSTACK FEED ─────────────────────────────────────────
 async function loadSubstack() {
   const el = document.getElementById('substack-feed');
@@ -115,46 +119,78 @@ async function loadPodcast() {
 
 // ── SUBSCRIBE BUTTON ──────────────────────────────────────
 function initSubscribe() {
+  const form = document.getElementById('sub-form');
   const btn = document.getElementById('sub-btn');
   const input = document.getElementById('sub-email');
-  if (!btn || !input) return;
+  const feedback = document.getElementById('sub-feedback');
+  if (!form || !btn || !input || !feedback) return;
 
-  btn.addEventListener('click', () => {
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
     const email = input.value.trim();
-    if (!email || !email.includes('@')) {
-      input.style.outline = '1px solid #c0392b';
+
+    if (!isValidEmail(email)) {
+      input.setAttribute('aria-invalid', 'true');
+      feedback.textContent = 'Enter a valid email address.';
+      feedback.dataset.state = 'error';
       input.focus();
       return;
     }
-    input.style.outline = '';
-    window.open(`${CONFIG.substackUrl}/subscribe?email=${encodeURIComponent(email)}`, '_blank');
+
+    input.removeAttribute('aria-invalid');
+    feedback.textContent = 'Opening Substack sign-up...';
+    feedback.dataset.state = 'success';
+    window.open(`${CONFIG.substackUrl}/subscribe?email=${encodeURIComponent(email)}`, '_blank', 'noopener,noreferrer');
     input.value = '';
     btn.textContent = 'Done ✓';
     btn.style.background = 'var(--accent)';
     setTimeout(() => {
       btn.textContent = 'Subscribe →';
       btn.style.background = '';
+      feedback.textContent = '';
+      delete feedback.dataset.state;
     }, 3000);
   });
 
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') btn.click();
+  input.addEventListener('input', () => {
+    if (isValidEmail(input.value.trim())) {
+      input.removeAttribute('aria-invalid');
+      if (feedback.dataset.state === 'error') {
+        feedback.textContent = '';
+        delete feedback.dataset.state;
+      }
+    }
   });
 }
 
 // ── MOBILE NAV ────────────────────────────────────────────
 function initMobileNav() {
+  const nav = document.querySelector('nav');
   const toggle = document.querySelector('.nav-toggle');
   const links = document.getElementById('nav-links');
-  if (!toggle || !links) return;
+  if (!nav || !toggle || !links) return;
+
+  const closeMenu = () => {
+    links.classList.remove('open');
+    toggle.setAttribute('aria-expanded', 'false');
+  };
 
   toggle.addEventListener('click', () => {
-    links.classList.toggle('open');
+    const isOpen = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
   });
 
   // Close nav when a link is clicked
   links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => links.classList.remove('open'));
+    a.addEventListener('click', closeMenu);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!nav.contains(e.target)) closeMenu();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMenu();
   });
 }
 

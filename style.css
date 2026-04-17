@@ -28,6 +28,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -120px;
+  left: 1rem;
+  z-index: 1000;
+  background: var(--ink);
+  color: var(--paper);
+  text-decoration: none;
+  padding: 0.6rem 0.8rem;
+  border-radius: 2px;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.skip-link:focus {
+  top: 0.8rem;
+}
+
 /* ── NAV ─────────────────────────────────────────────────── */
 nav {
   display: flex;
@@ -633,6 +656,7 @@ nav {
 }
 
 .sub-input::placeholder { color: var(--ink-muted); }
+.sub-input[aria-invalid="true"] { outline: 1px solid #b00020; }
 
 .sub-btn {
   font-family: var(--sans);
@@ -654,6 +678,16 @@ nav {
 .sub-note {
   font-size: 0.68rem;
   color: var(--ink-muted);
+}
+
+.sub-feedback {
+  min-height: 1.1em;
+  font-size: 0.68rem;
+  color: var(--accent);
+}
+
+.sub-feedback[data-state="error"] {
+  color: #b00020;
 }
 
 .sub-note a { color: var(--accent); text-decoration: none; }
@@ -746,4 +780,12 @@ footer {
 @media (max-width: 520px) {
   .pillars { grid-template-columns: 1fr; }
   .hero-headline { font-size: 2.2rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }

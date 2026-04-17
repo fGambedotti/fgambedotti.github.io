@@ -4,22 +4,48 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Federico Gambedotti — Researcher, writer, builder, and podcast host working at the intersection of energy, systems, and fairness.">
+  <meta name="theme-color" content="#f7f5f0">
+  <link rel="canonical" href="https://fgambedotti.github.io/">
   <meta property="og:title" content="Federico Gambedotti">
   <meta property="og:description" content="The systems that run our world were designed. They can be redesigned.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fgambedotti.github.io">
+  <meta property="og:site_name" content="Federico Gambedotti">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Federico Gambedotti">
+  <meta name="twitter:description" content="The systems that run our world were designed. They can be redesigned.">
   <title>Federico Gambedotti</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Federico Gambedotti",
+      "url": "https://fgambedotti.github.io/",
+      "jobTitle": "Researcher, Writer, Builder, Podcast Host",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "UCL"
+      },
+      "sameAs": [
+        "https://fedegam.substack.com",
+        "https://www.youtube.com/@2HumansPodcast",
+        "https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116"
+      ]
+    }
+  </script>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
 
   <!-- NAV -->
-  <nav>
+  <nav aria-label="Primary">
     <div class="nav-name">Federico Gambedotti</div>
-    <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false">&#9776;</button>
     <ul class="nav-links" id="nav-links">
       <li><a href="#research">Research</a></li>
       <li><a href="#writing">Writing</a></li>
@@ -29,6 +55,7 @@
     </ul>
   </nav>
 
+  <main id="main-content">
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
@@ -96,7 +123,7 @@
     <div class="feed-col">
       <div class="feed-col-header">
         <span class="feed-col-label">Writing — Substack</span>
-        <a class="feed-col-link" href="https://fedegam.substack.com" target="_blank" rel="noopener">All posts →</a>
+        <a class="feed-col-link" href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">All posts →</a>
       </div>
       <div id="substack-feed">
         <div class="skel-wrap">
@@ -109,7 +136,7 @@
     <div class="feed-col">
       <div class="feed-col-header">
         <span class="feed-col-label">Podcast — 2Humans</span>
-        <a class="feed-col-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener">All episodes →</a>
+        <a class="feed-col-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">All episodes →</a>
       </div>
       <div id="podcast-feed">
         <div class="skel-wrap">
@@ -125,7 +152,7 @@
   <div class="yt-section">
     <div class="yt-header">
       <span class="yt-label">Video — 2Humans on YouTube</span>
-      <a class="yt-link" href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener">Visit channel →</a>
+      <a class="yt-link" href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener noreferrer">Visit channel →</a>
     </div>
     <div class="yt-embed">
       <iframe
@@ -151,7 +178,7 @@
     <div class="about-right">
       <p class="about-text">I am a PhD researcher at UCL, a writer, a startup builder, and co-host of the 2Humans podcast. My work sits at the intersection of energy, equity, and institutional design — with a broader interest in how technology and better ideas can improve people's lives.</p>
       <p class="about-text">I do not see research, writing, and building as separate pursuits. They are different ways of studying the same questions and contributing to the same goal: systems that serve everyone, not just those already at the top.</p>
-      <a href="https://fedegam.substack.com" class="about-cta" target="_blank" rel="noopener">Read my writing →</a>
+      <a href="https://fedegam.substack.com" class="about-cta" target="_blank" rel="noopener noreferrer">Read my writing →</a>
     </div>
   </section>
 
@@ -162,21 +189,23 @@
       <p class="sub-desc">Weekly writing on energy, systems, and the politics of fairness. No noise — just the work.</p>
     </div>
     <div class="sub-right">
-      <div class="sub-form">
-        <input class="sub-input" type="email" id="sub-email" placeholder="Your email address" aria-label="Email address">
-        <button class="sub-btn" id="sub-btn">Subscribe →</button>
-      </div>
-      <p class="sub-note">Delivered via <a href="https://fedegam.substack.com" target="_blank" rel="noopener">Substack</a>. Free. Unsubscribe anytime.</p>
+      <form class="sub-form" id="sub-form" action="https://fedegam.substack.com/subscribe" method="get" target="_blank" novalidate>
+        <input class="sub-input" type="email" id="sub-email" name="email" placeholder="Your email address" aria-label="Email address" autocomplete="email" inputmode="email" required>
+        <button class="sub-btn" type="submit" id="sub-btn">Subscribe →</button>
+      </form>
+      <p class="sub-feedback" id="sub-feedback" aria-live="polite"></p>
+      <p class="sub-note">Delivered via <a href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>. Free. Unsubscribe anytime.</p>
     </div>
   </section>
+  </main>
 
   <!-- FOOTER -->
   <footer>
     <div class="footer-name">Federico Gambedotti</div>
     <ul class="footer-links">
-      <li><a href="https://fedegam.substack.com" target="_blank" rel="noopener">Substack</a></li>
-      <li><a href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener">Podcast</a></li>
-      <li><a href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener">YouTube</a></li>
+      <li><a href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">Substack</a></li>
+      <li><a href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">Podcast</a></li>
+      <li><a href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener noreferrer">YouTube</a></li>
       <li><a href="mailto:hello@federicogambedotti.com">Contact</a></li>
     </ul>
     <div class="footer-copy">© 2026 Federico Gambedotti</div>
