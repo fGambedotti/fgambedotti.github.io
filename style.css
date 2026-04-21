@@ -250,6 +250,12 @@ nav {
   font-weight: 300;
 }
 
+.pillar-desc a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .pillar-status {
   margin-top: auto;
   font-size: 0.65rem;
