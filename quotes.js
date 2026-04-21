@@ -3,8 +3,8 @@
 // "Quote of the day — a line from my notebook"
 //
 // 50 quotes: 30 original (FG), 20 attributed.
-// Rotation logic: uses today's date as seed so every visitor
-// sees the same quote on the same day. Feels curated, not random.
+// Rotation logic: random quote on each page load so visitors
+// may see different quotes at the same time.
 // ============================================================
 
 const QUOTES = [
@@ -264,20 +264,16 @@ const QUOTES = [
 ];
 
 // - ROTATION LOGIC
-// Same quote for all visitors on the same calendar day.
-// Change QUOTES_VERSION to force a reset if you update the list.
-const QUOTES_VERSION = 1;
 let baseQuoteIndex = 0;
 let quoteOffset = 0;
 
-function getQuoteIndexOfTheDay() {
-  const now = new Date();
-  const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate() + QUOTES_VERSION;
-  return seed % QUOTES.length;
-}
-
-function getQuoteOfTheDay() {
-  return QUOTES[getQuoteIndexOfTheDay()];
+function getRandomQuoteIndex() {
+  if (window.crypto && typeof window.crypto.getRandomValues === 'function') {
+    const randomBuffer = new Uint32Array(1);
+    window.crypto.getRandomValues(randomBuffer);
+    return randomBuffer[0] % QUOTES.length;
+  }
+  return Math.floor(Math.random() * QUOTES.length);
 }
 
 function escapeHtml(value) {
@@ -321,7 +317,7 @@ function renderQuoteOfTheDay() {
   const container = document.getElementById('quote-section');
   if (!container) return;
 
-  baseQuoteIndex = getQuoteIndexOfTheDay();
+  baseQuoteIndex = getRandomQuoteIndex();
   quoteOffset = 0;
   renderQuoteAtIndex(baseQuoteIndex, false);
 
