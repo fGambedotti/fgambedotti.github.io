@@ -14,6 +14,8 @@ const CONFIG = {
   ],
   substackUrl: 'https://fedegam.substack.com',
   podcastUrl: 'https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116',
+  youtubePodcastPlaylistId: 'PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
+  youtubePodcastFeed: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?playlist_id=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
 };
 
 // Fallback episodes pulled from Apple Podcasts (update as new episodes drop)
@@ -56,6 +58,25 @@ function stripHtml(html) {
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function extractYouTubeVideoId(url) {
+  if (!url) return '';
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname.replace(/^www\./, '');
+    if (host === 'youtu.be') return parsed.pathname.replace('/', '');
+    if (host === 'youtube.com' || host === 'm.youtube.com') {
+      const idFromQuery = parsed.searchParams.get('v');
+      if (idFromQuery) return idFromQuery;
+      const parts = parsed.pathname.split('/').filter(Boolean);
+      const embedIndex = parts.indexOf('embed');
+      if (embedIndex !== -1 && parts[embedIndex + 1]) return parts[embedIndex + 1];
+    }
+  } catch (e) {
+    return '';
+  }
+  return '';
 }
 
 // ── SUBSTACK FEED ─────────────────────────────────────────
@@ -115,6 +136,24 @@ async function loadPodcast() {
       </div>
     </a>
   `).join('');
+}
+
+// ── YOUTUBE PODCAST (LATEST VIDEO) ───────────────────────
+async function loadLatestYouTubePodcastVideo() {
+  const frame = document.getElementById('yt-latest-video');
+  if (!frame) return;
+
+  try {
+    const res = await fetch(CONFIG.youtubePodcastFeed);
+    const data = await res.json();
+    const latestItem = data?.items?.[0];
+    const latestId = extractYouTubeVideoId(latestItem?.link || latestItem?.guid || '');
+
+    if (!latestId) throw new Error('No latest playlist video found');
+    frame.src = `https://www.youtube.com/embed/${latestId}?rel=0&modestbranding=1`;
+  } catch (e) {
+    // Keep static iframe src fallback from HTML when feed fetch fails.
+  }
 }
 
 // ── SUBSCRIBE BUTTON ──────────────────────────────────────
@@ -214,6 +253,7 @@ function initMobileNav() {
 document.addEventListener('DOMContentLoaded', () => {
   loadSubstack();
   loadPodcast();
+  loadLatestYouTubePodcastVideo();
   initSubscribe();
   initContactEmailLink();
   initMobileNav();
