@@ -44,59 +44,6 @@ const PODCAST_FALLBACK = [
   }
 ];
 
-const DAILY_QUOTES = [
-  { text: 'The reasonable man adapts himself to the world; the unreasonable one persists in trying to adapt the world to himself. Therefore all progress depends on the unreasonable man.', author: 'George Bernard Shaw' },
-  { text: 'You never change things by fighting the existing reality. To change something, build a new model that makes the existing model obsolete.', author: 'Buckminster Fuller' },
-  { text: "The most common way people give up their power is by thinking they don't have any.", author: 'Alice Walker' },
-  { text: 'An institution is the lengthened shadow of one or a few individuals.', author: 'Ralph Waldo Emerson' },
-  { text: 'The significant problems we face cannot be solved at the same level of thinking we were at when we created them.', author: 'Albert Einstein' },
-  { text: 'Power concedes nothing without a demand. It never did and it never will.', author: 'Frederick Douglass' },
-  { text: 'Every system is perfectly designed to get the results it gets.', author: 'W. Edwards Deming' },
-  { text: 'The measure of intelligence is the ability to change.', author: 'Albert Einstein' },
-  { text: 'Those who make peaceful revolution impossible will make violent revolution inevitable.', author: 'John F. Kennedy' },
-  { text: 'A society grows great when old men plant trees whose shade they know they shall never sit in.', author: 'Greek proverb' },
-  { text: 'The goal of life is not to be on the side of the majority, but to escape finding oneself in the ranks of the insane.', author: 'Marcus Aurelius' },
-  { text: 'We cannot solve our problems with the same thinking we used when we created them.', author: 'Albert Einstein' },
-  { text: 'Energy is the only universal currency: one of its many forms must be transformed to get anything done.', author: 'Vaclav Smil' },
-  { text: "The future is already here - it's just not evenly distributed.", author: 'William Gibson' },
-  { text: 'Injustice anywhere is a threat to justice everywhere.', author: 'Martin Luther King Jr.' },
-  { text: 'The art of progress is to preserve order amid change and to preserve change amid order.', author: 'Alfred North Whitehead' },
-  { text: 'Real generosity toward the future lies in giving all to the present.', author: 'Albert Camus' },
-  { text: 'The world will not be destroyed by those who do evil, but by those who watch them without doing anything.', author: 'Albert Einstein' },
-  { text: "To do evil a human being must first of all believe that what he's doing is good.", author: 'Aleksandr Solzhenitsyn' },
-  { text: 'The test of a first-rate intelligence is the ability to hold two opposed ideas in mind at the same time and still retain the ability to function.', author: 'F. Scott Fitzgerald' },
-  { text: 'It is not the strongest of the species that survives, nor the most intelligent, but the one most responsive to change.', author: 'Charles Darwin' },
-  { text: "The greatest danger in times of turbulence is not the turbulence - it is to act with yesterday's logic.", author: 'Peter Drucker' },
-  { text: 'Poverty is not an accident. Like slavery and apartheid, it is man-made and can be removed by the actions of human beings.', author: 'Nelson Mandela' },
-  { text: 'Any sufficiently advanced technology is indistinguishable from magic.', author: 'Arthur C. Clarke' },
-  { text: 'The machine does not isolate man from the great problems of nature but plunges him more deeply into them.', author: 'Antoine de Saint-Exupery' },
-  { text: 'We shape our tools, and thereafter our tools shape us.', author: 'Marshall McLuhan' },
-  { text: 'The price of anything is the amount of life you exchange for it.', author: 'Henry David Thoreau' },
-  { text: 'First they ignore you, then they laugh at you, then they fight you, then you win.', author: 'Mahatma Gandhi' },
-  { text: 'The only way to deal with an unfree world is to become so absolutely free that your very existence is an act of rebellion.', author: 'Albert Camus' },
-  { text: 'In a time of universal deceit, telling the truth is a revolutionary act.', author: 'George Orwell' },
-  { text: 'The obstacle is the path.', author: 'Zen proverb' },
-  { text: 'He who has a why to live can bear almost any how.', author: 'Friedrich Nietzsche' },
-  { text: 'An investment in knowledge pays the best interest.', author: 'Benjamin Franklin' },
-  { text: 'The secret of getting ahead is getting started.', author: 'Mark Twain' },
-  { text: 'If you want to go fast, go alone. If you want to go far, go together.', author: 'African proverb' },
-  { text: 'Climate change is not an environmental issue. It is a civilisational issue.', author: 'Christiana Figueres' },
-  { text: 'The commons is not a resource. It is a practice.', author: 'David Bollier' },
-  { text: 'There is no such thing as a free market. There are only markets with rules written by someone.', author: 'Robert Reich' },
-  { text: 'We do not inherit the earth from our ancestors; we borrow it from our children.', author: 'Native American proverb' },
-  { text: 'The trouble with the world is that the stupid are cocksure and the intelligent are full of doubt.', author: 'Bertrand Russell' },
-  { text: 'A small group of thoughtful, committed citizens can change the world; indeed, it is the only thing that ever has.', author: 'Margaret Mead' },
-  { text: 'The most powerful force in the universe is compound interest.', author: 'Albert Einstein' },
-  { text: 'Not everything that counts can be counted, and not everything that can be counted counts.', author: 'William Bruce Cameron' },
-  { text: 'Democracy is the worst form of government, except for all the others.', author: 'Winston Churchill' },
-  { text: 'The purpose of a system is what it does.', author: 'Stafford Beer' },
-  { text: 'There are no solutions. There are only trade-offs.', author: 'Thomas Sowell' },
-  { text: 'Knowledge is not power. The application of knowledge is power.', author: 'Dale Carnegie' },
-  { text: 'The good we secure for ourselves is precarious and uncertain until it is secured for all of us.', author: 'Jane Addams' },
-  { text: 'In every walk with nature, one receives far more than he seeks.', author: 'John Muir' },
-  { text: 'The systems that run our world were designed. They can be redesigned.', author: 'Federico Gambedotti' },
-];
-
 // ── HELPERS ───────────────────────────────────────────────
 function fmtDate(str) {
   if (!str) return '';
@@ -314,23 +261,6 @@ async function loadPodcastCards() {
   }
 }
 
-// ── QUOTE OF THE DAY ─────────────────────────────────────
-function initQuoteOfDay() {
-  const textEl = document.getElementById('daily-quote-text');
-  const authorEl = document.getElementById('daily-quote-author');
-  if (!textEl || !authorEl || DAILY_QUOTES.length === 0) return;
-
-  const now = new Date();
-  const seed = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-  let hash = 0;
-  for (let i = 0; i < seed.length; i += 1) hash = ((hash << 5) - hash) + seed.charCodeAt(i);
-  const index = Math.abs(hash) % DAILY_QUOTES.length;
-  const quote = DAILY_QUOTES[index];
-
-  textEl.textContent = `"${quote.text}"`;
-  authorEl.textContent = `— ${quote.author}`;
-}
-
 // ── SUBSCRIBE BUTTON ──────────────────────────────────────
 function initSubscribe() {
   const form = document.getElementById('sub-form');
@@ -430,7 +360,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPodcast();
   loadPodcastCards();
   loadLatestYouTubePodcastVideo();
-  initQuoteOfDay();
   initSubscribe();
   initContactEmailLink();
   initMobileNav();

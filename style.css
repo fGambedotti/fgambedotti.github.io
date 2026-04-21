@@ -843,40 +843,85 @@ nav {
 
 .sub-note a { color: var(--accent); text-decoration: none; }
 
-/* ── QUOTE OF THE DAY ───────────────────────────────────── */
-.daily-quote-section {
+/* ── QUOTE SECTION ───────────────────────────────────────── */
+.quote-wrapper {
+  border-top: 0.5px solid var(--rule);
   border-bottom: 0.5px solid var(--rule);
-  padding: 2.5rem 3rem 2.8rem;
+  padding: 5rem 3rem;
+  display: flex;
+  justify-content: center;
   background: var(--paper-warm);
 }
 
-.daily-quote-inner {
-  max-width: 74ch;
+#quote-section {
+  max-width: 68ch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.daily-quote-label {
-  display: inline-block;
-  font-size: 0.65rem;
+.quote-eyebrow {
+  font-size: 0.68rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink-muted);
-  margin-bottom: 0.9rem;
+  font-weight: 400;
 }
 
-.daily-quote-text {
+.quote-text {
   font-family: var(--serif);
-  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
-  line-height: 1.55;
-  color: var(--ink);
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  font-weight: 400;
   font-style: italic;
-  margin-bottom: 0.6rem;
+  line-height: 1.6;
+  color: var(--ink);
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
-.daily-quote-author {
+.quote-attribution {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.quote-dash {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+}
+
+.quote-author {
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.quote-badge {
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  margin-left: 0.25rem;
+}
+
+.quote-return {
   font-size: 0.7rem;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-soft);
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.quote-loading {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  font-style: italic;
 }
 
 /* ── FOOTER ──────────────────────────────────────────────── */
@@ -966,7 +1011,7 @@ footer {
   .sub-left { padding: 2rem 1.5rem; border-right: none; border-bottom: 0.5px solid var(--rule); }
   .sub-right { padding: 2rem 1.5rem; }
 
-  .daily-quote-section { padding: 1.8rem 1.5rem 2rem; }
+  .quote-wrapper { padding: 3.5rem 1.5rem; }
 
   footer { flex-direction: column; gap: 1.25rem; padding: 1.5rem; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
