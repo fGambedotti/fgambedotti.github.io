@@ -428,6 +428,110 @@ function initHeroWordAnimation() {
   });
 }
 
+// ── HERO WORD HOVER FLIP ──────────────────────────────────
+function initHeroHoverFlip() {
+  const words = document.querySelectorAll('.hero-word-past, .hero-word-future');
+  if (!words.length) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  words.forEach((word) => {
+    word.addEventListener('mouseenter', () => {
+      word.classList.remove('is-flip');
+      // Force reflow so rapid re-hover retriggers the animation.
+      void word.offsetWidth;
+      word.classList.add('is-flip');
+    });
+
+    word.addEventListener('animationend', (event) => {
+      if (event.animationName === 'heroWordFlip') {
+        word.classList.remove('is-flip');
+      }
+    });
+  });
+}
+
+// ── HERO KEYWORD ROTATOR ──────────────────────────────────
+const HERO_KEYWORDS = [
+  'Energy equity',
+  'Energy transition',
+  'Fairness',
+  'AI revolution',
+  'Flexibility markets',
+  'Energy inclusion',
+  'Institutions',
+  'Policy design',
+  'Community energy',
+  'Research',
+  'Writing',
+  'Podcast'
+];
+
+function initHeroKeywordCloud() {
+  const cloud = document.getElementById('hero-keyword-cloud');
+  const currentEl = document.getElementById('hero-keyword-current');
+  const backgroundEl = document.getElementById('hero-keyword-bg');
+  if (!cloud || !currentEl || !backgroundEl) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const keywordItems = Array.from(cloud.querySelectorAll('.hero-keyword-item'));
+  if (!HERO_KEYWORDS.length) return;
+
+  let currentIndex = Math.floor(Math.random() * HERO_KEYWORDS.length);
+  let lastAdvanceAt = 0;
+
+  const syncKeywordState = (nextIndex, animate) => {
+    const keyword = HERO_KEYWORDS[nextIndex];
+    currentEl.textContent = keyword;
+    backgroundEl.textContent = keyword;
+
+    keywordItems.forEach((item) => {
+      item.classList.toggle('is-active', item.dataset.keyword === keyword);
+    });
+
+    if (animate && !prefersReducedMotion) {
+      currentEl.classList.remove('is-swapping');
+      backgroundEl.classList.remove('is-swapping');
+      void currentEl.offsetWidth;
+      currentEl.classList.add('is-swapping');
+      backgroundEl.classList.add('is-swapping');
+    }
+  };
+
+  const getNextIndex = () => {
+    if (HERO_KEYWORDS.length === 1) return 0;
+    let next = currentIndex;
+    while (next === currentIndex) {
+      next = Math.floor(Math.random() * HERO_KEYWORDS.length);
+    }
+    return next;
+  };
+
+  const advanceKeyword = () => {
+    const now = performance.now();
+    if (now - lastAdvanceAt < 350) return;
+    lastAdvanceAt = now;
+    currentIndex = getNextIndex();
+    syncKeywordState(currentIndex, true);
+  };
+
+  syncKeywordState(currentIndex, false);
+
+  const intervalId = window.setInterval(advanceKeyword, 5000);
+  cloud.addEventListener('mouseenter', advanceKeyword);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    // Refresh once when returning to tab.
+    advanceKeyword();
+  });
+
+  window.addEventListener('beforeunload', () => {
+    window.clearInterval(intervalId);
+  });
+}
+
 // ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadSubstack();
@@ -440,4 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initActiveNav();
   initMobileNav();
   initHeroWordAnimation();
+  initHeroHoverFlip();
+  initHeroKeywordCloud();
 });
