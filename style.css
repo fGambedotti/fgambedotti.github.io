@@ -119,7 +119,7 @@ nav {
 /* ?? HERO Ñ dark green band ???????????????????????????????? */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   min-height: 88vh;
   border-bottom: 0.5px solid var(--rule);
 }
@@ -130,7 +130,6 @@ nav {
   flex-direction: column;
   justify-content: space-between;
   background: var(--hero-bg);
-  border-right: 1px solid var(--hero-rule);
 }
 
 .hero-eyebrow {
@@ -195,39 +194,6 @@ nav {
 }
 
 .hero-cta:hover { gap: 1.25rem; }
-
-.hero-right {
-  padding: 5rem 3.5rem 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 2.5rem;
-  background: var(--hero-bg-deep);
-}
-
-.hero-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  padding-top: 1.75rem;
-  border-top: 1px solid var(--hero-rule);
-}
-
-.hero-stat-label {
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--hero-stat-label);
-}
-
-.hero-stat-value {
-  font-family: var(--serif);
-  font-size: 1rem;
-  color: var(--hero-stat-val);
-  font-weight: 400;
-  font-style: italic;
-  line-height: 1.5;
-}
 
 /* ?? PILLARS ??????????????????????????????????????????????? */
 .pillars {
@@ -324,7 +290,7 @@ nav {
 
 .feed-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   border-bottom: 0.5px solid var(--rule);
 }
 
@@ -766,7 +732,7 @@ nav {
 /* ?? SUBSCRIBE ????????????????????????????????????????????? */
 .subscribe {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   border-bottom: 0.5px solid var(--rule);
 }
 
@@ -951,23 +917,6 @@ footer {
   font-style: italic;
 }
 
-.footer-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-.footer-links a {
-  font-size: 0.72rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover { color: var(--ink); }
-
 .footer-copy {
   font-size: 0.68rem;
   color: var(--ink-muted);
@@ -1005,8 +954,7 @@ footer {
   .nav-links.open { display: flex; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-left { padding: 3rem 1.5rem; border-right: none; border-bottom: 1px solid var(--hero-rule); }
-  .hero-right { padding: 2.5rem 1.5rem; }
-  .pillars { grid-template-columns: 1fr 1fr; }
+  .pillars { grid-template-columns: 1fr; }
   .pillar { border-bottom: 0.5px solid var(--rule); }
   .feeds-header { padding: 1.5rem; }
   .feed-grid { grid-template-columns: 1fr; }
@@ -1024,7 +972,6 @@ footer {
   .sub-right { padding: 2rem 1.5rem; }
   .quote-wrapper { padding: 3.5rem 1.5rem; }
   footer { flex-direction: column; gap: 1.25rem; padding: 1.5rem; text-align: center; }
-  .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
   .reach-line { padding: 0 1.5rem 1.5rem; text-align: center; }
 }
 
