@@ -1,6 +1,6 @@
 // ============================================================
 // Federico Gambedotti - Quotes
-// "If you looked at my secret notes today you would see..."
+// "Quote of the day — a line from my notebook"
 //
 // 50 quotes: 30 original (FG), 20 attributed.
 // Rotation logic: uses today's date as seed so every visitor
@@ -300,7 +300,7 @@ function renderQuoteAtIndex(index, isExtraQuote) {
 
   container.innerHTML = `
     <div class="quote-eyebrow">
-      If you looked at my secret notes today you would see&hellip;
+      Quote of the day — a line from my notebook
     </div>
     <blockquote class="quote-text">
       &ldquo;${escapeHtml(quote.text)}&rdquo;
