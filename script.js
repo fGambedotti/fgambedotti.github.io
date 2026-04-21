@@ -354,6 +354,19 @@ function initMobileNav() {
   });
 }
 
+// ── HERO WORD ANIMATION ───────────────────────────────────
+function initHeroWordAnimation() {
+  const word = document.querySelector('.hero-headline em');
+  if (!word) return;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  requestAnimationFrame(() => {
+    word.classList.add('is-writing');
+  });
+}
+
 // ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   loadSubstack();
@@ -363,4 +376,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initSubscribe();
   initContactEmailLink();
   initMobileNav();
+  initHeroWordAnimation();
 });

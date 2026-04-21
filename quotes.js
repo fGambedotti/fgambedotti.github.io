@@ -267,12 +267,17 @@ const QUOTES = [
 // Same quote for all visitors on the same calendar day.
 // Change QUOTES_VERSION to force a reset if you update the list.
 const QUOTES_VERSION = 1;
+let baseQuoteIndex = 0;
+let quoteOffset = 0;
 
-function getQuoteOfTheDay() {
+function getQuoteIndexOfTheDay() {
   const now = new Date();
   const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate() + QUOTES_VERSION;
-  const index = seed % QUOTES.length;
-  return QUOTES[index];
+  return seed % QUOTES.length;
+}
+
+function getQuoteOfTheDay() {
+  return QUOTES[getQuoteIndexOfTheDay()];
 }
 
 function escapeHtml(value) {
@@ -285,12 +290,13 @@ function escapeHtml(value) {
 }
 
 // - RENDER
-function renderQuoteOfTheDay() {
+function renderQuoteAtIndex(index, isExtraQuote) {
   const container = document.getElementById('quote-section');
   if (!container) return;
 
-  const quote = getQuoteOfTheDay();
+  const quote = QUOTES[index];
   const isOriginal = quote.original;
+  const returnText = isExtraQuote ? 'Want another? Keep going.' : 'Come back tomorrow for another.';
 
   container.innerHTML = `
     <div class="quote-eyebrow">
@@ -304,8 +310,29 @@ function renderQuoteOfTheDay() {
       <span class="quote-author">${escapeHtml(quote.author)}</span>
       ${isOriginal ? '<span class="quote-badge">Original</span>' : ''}
     </div>
-    <div class="quote-return">Come back tomorrow for another.</div>
+    <div class="quote-actions">
+      <div class="quote-return">${returnText}</div>
+      <button class="quote-more-btn" type="button" data-quote-more>I want one more quote</button>
+    </div>
   `;
+}
+
+function renderQuoteOfTheDay() {
+  const container = document.getElementById('quote-section');
+  if (!container) return;
+
+  baseQuoteIndex = getQuoteIndexOfTheDay();
+  quoteOffset = 0;
+  renderQuoteAtIndex(baseQuoteIndex, false);
+
+  container.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-quote-more]');
+    if (!trigger) return;
+
+    quoteOffset = (quoteOffset + 1) % QUOTES.length;
+    const nextIndex = (baseQuoteIndex + quoteOffset) % QUOTES.length;
+    renderQuoteAtIndex(nextIndex, true);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', renderQuoteOfTheDay);
