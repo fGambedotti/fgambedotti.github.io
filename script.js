@@ -163,6 +163,22 @@ function initSubscribe() {
   });
 }
 
+// ── CONTACT EMAIL ────────────────────────────────────────
+function initContactEmailLink() {
+  const link = document.getElementById('contact-email-link');
+  if (!link) return;
+
+  const { user, domain } = link.dataset;
+  if (!user || !domain) {
+    link.removeAttribute('href');
+    return;
+  }
+
+  const email = `${user}@${domain}`;
+  link.href = `mailto:${email}?subject=Website%20enquiry`;
+  link.setAttribute('aria-label', `Email ${email}`);
+}
+
 // ── MOBILE NAV ────────────────────────────────────────────
 function initMobileNav() {
   const nav = document.querySelector('nav');
@@ -199,5 +215,6 @@ document.addEventListener('DOMContentLoaded', () => {
   loadSubstack();
   loadPodcast();
   initSubscribe();
+  initContactEmailLink();
   initMobileNav();
 });
