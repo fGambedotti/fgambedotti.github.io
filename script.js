@@ -356,7 +356,7 @@ function initMobileNav() {
 
 // ── HERO WORD ANIMATION ───────────────────────────────────
 function initHeroWordAnimation() {
-  const word = document.querySelector('.hero-headline em');
+  const word = document.querySelector('.hero-word-future');
   if (!word) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
