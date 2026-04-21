@@ -356,14 +356,40 @@ function initMobileNav() {
 
 // ── HERO WORD ANIMATION ───────────────────────────────────
 function initHeroWordAnimation() {
-  const word = document.querySelector('.hero-word-future');
-  if (!word) return;
+  const pastWord = document.querySelector('.hero-word-past');
+  const futureWord = document.querySelector('.hero-word-future');
+  if (!pastWord || !futureWord) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
+  const typeStep = 0.085;
+  const letterDuration = 0.34;
+  const startDelay = 0.2;
+  const gapBetweenWords = 0.34;
+
+  const prepareWord = (wordEl, delayStart) => {
+    const text = wordEl.textContent.trim();
+    const chars = Array.from(text);
+    wordEl.textContent = '';
+
+    chars.forEach((char, index) => {
+      const letter = document.createElement('span');
+      letter.className = 'hero-letter';
+      letter.textContent = char === ' ' ? '\u00A0' : char;
+      letter.style.setProperty('--letter-delay', `${delayStart + index * typeStep}s`);
+      wordEl.appendChild(letter);
+    });
+
+    wordEl.classList.add('is-typing');
+    return chars.length;
+  };
+
   requestAnimationFrame(() => {
-    word.classList.add('is-writing');
+    const pastCount = prepareWord(pastWord, startDelay);
+    const pastDuration = (Math.max(0, pastCount - 1) * typeStep) + letterDuration;
+    const futureStart = startDelay + pastDuration + gapBetweenWords;
+    prepareWord(futureWord, futureStart);
   });
 }
 

@@ -175,6 +175,10 @@ nav {
   font-weight: 700;
   letter-spacing: 0;
   line-height: 0.96;
+}
+
+.hero-word-future,
+.hero-word-future .hero-letter {
   background: linear-gradient(92deg, #8cebd0 0%, #7fd7ff 44%, #c9b7ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
@@ -183,46 +187,33 @@ nav {
   text-shadow: 0 0 24px rgba(126, 231, 255, 0.2);
 }
 
-.hero-word-future.is-writing {
-  width: 0;
+.hero-letter {
+  display: inline-block;
   opacity: 0;
-  overflow: hidden;
-  transform: translateY(0.14em) rotate(-1.5deg);
-  animation: futureWriteIn 1.05s cubic-bezier(0.22, 0.65, 0.18, 1) 0.2s forwards;
+  transform: translateY(0.16em);
+  filter: blur(1.2px);
 }
 
-.hero-word-future.is-writing::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0.08em;
-  height: 1px;
-  background: rgba(126, 231, 255, 0.85);
-  transform: scaleX(0);
-  transform-origin: left center;
-  opacity: 0.7;
-  animation: futureUnderlineIn 0.55s ease-out 0.66s forwards;
+.hero-word-past.is-typing .hero-letter,
+.hero-word-future.is-typing .hero-letter {
+  animation: heroTypeLetter 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation-delay: var(--letter-delay, 0s);
 }
 
-@keyframes futureWriteIn {
+@keyframes heroTypeLetter {
   0% {
-    width: 0;
     opacity: 0;
-    filter: blur(1.3px);
+    transform: translateY(0.16em);
+    filter: blur(1.2px);
   }
-  20% { opacity: 1; }
-  100% {
-    width: 8.5ch;
+  45% {
     opacity: 1;
-    filter: blur(0);
-    transform: translateY(0) rotate(0);
   }
-}
-
-@keyframes futureUnderlineIn {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
 }
 
 .hero-bottom {
@@ -1134,10 +1125,8 @@ footer {
     animation: none !important;
     transition: none !important;
   }
-  .hero-word-future.is-writing {
-    width: auto !important;
+  .hero-letter {
     opacity: 1 !important;
-    overflow: visible !important;
     transform: none !important;
     filter: none !important;
   }
