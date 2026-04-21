@@ -35,7 +35,7 @@
   --serif: 'Playfair Display', Georgia, serif;
   --sans: 'DM Sans', system-ui, sans-serif;
   --old: 'Special Elite', 'Courier New', monospace;
-  --future: 'Orbitron', 'DM Sans', system-ui, sans-serif;
+  --future: 'Dancing Script', 'Playfair Display', cursive;
 }
 
 html { scroll-behavior: smooth; }
@@ -171,14 +171,16 @@ nav {
 
 .hero-word-future {
   font-family: var(--future);
-  font-size: 0.86em;
+  font-size: 0.92em;
   font-weight: 700;
-  letter-spacing: 0.01em;
-  background: linear-gradient(90deg, #9FE1CB 0%, #7ee7ff 45%, #d7a8ff 100%);
+  letter-spacing: 0;
+  line-height: 0.96;
+  background: linear-gradient(92deg, #8cebd0 0%, #7fd7ff 44%, #c9b7ff 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
   color: transparent;
+  text-shadow: 0 0 24px rgba(126, 231, 255, 0.2);
 }
 
 .hero-word-future.is-writing {
@@ -211,7 +213,7 @@ nav {
   }
   20% { opacity: 1; }
   100% {
-    width: 8.1ch;
+    width: 8.5ch;
     opacity: 1;
     filter: blur(0);
     transform: translateY(0) rotate(0);
