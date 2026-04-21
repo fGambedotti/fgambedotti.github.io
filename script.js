@@ -121,6 +121,7 @@ function getFallbackEpisodeMeta(title) {
 // ── SUBSTACK FEED ─────────────────────────────────────────
 async function loadSubstack() {
   const el = document.getElementById('substack-feed');
+  if (!el) return;
   try {
     const res = await fetch(CONFIG.substackFeed);
     const data = await res.json();
@@ -141,6 +142,7 @@ async function loadSubstack() {
 // ── PODCAST FEED ──────────────────────────────────────────
 async function loadPodcast() {
   const el = document.getElementById('podcast-feed');
+  if (!el) return;
 
   for (const url of CONFIG.podcastFeeds) {
     try {
@@ -259,6 +261,39 @@ async function loadPodcastCards() {
       </article>
     `).join('');
   }
+}
+
+// ── SCROLL REVEAL ──────────────────────────────────────────
+function initScrollReveal() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
+  );
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .stagger-children').forEach((el) => {
+    observer.observe(el);
+  });
+}
+
+// ── ACTIVE NAV LINK ───────────────────────────────────────
+function initActiveNav() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach((link) => {
+    const linkPage = link.getAttribute('href');
+    if (linkPage === currentPage) {
+      link.classList.add('active');
+    }
+  });
 }
 
 // ── SUBSCRIBE BUTTON ──────────────────────────────────────
@@ -399,8 +434,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadPodcast();
   loadPodcastCards();
   loadLatestYouTubePodcastVideo();
+  initScrollReveal();
   initSubscribe();
   initContactEmailLink();
+  initActiveNav();
   initMobileNav();
   initHeroWordAnimation();
 });

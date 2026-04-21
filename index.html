@@ -54,14 +54,13 @@
 
   <!-- NAV -->
   <nav aria-label="Primary">
-    <div class="nav-name">Federico Gambedotti</div>
+    <a class="nav-name" href="index.html">Federico Gambedotti</a>
     <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false">&#9776;</button>
     <ul class="nav-links" id="nav-links">
-      <li><a href="#research">Research</a></li>
-      <li><a href="#writing">Writing</a></li>
-      <li><a href="#building">Building</a></li>
-      <li><a href="#podcast">Podcast</a></li>
-      <li><a href="#about">About</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="writing.html">Writing</a></li>
+      <li><a href="podcast.html">Podcast</a></li>
+      <li><a href="about.html">About</a></li>
     </ul>
   </nav>
 
@@ -83,47 +82,47 @@
   </section>
 
   <!-- QUOTE OF THE DAY -->
-  <section class="quote-wrapper">
+  <section class="quote-wrapper reveal">
     <div id="quote-section">
       <div class="quote-loading">Loading today&rsquo;s note&hellip;</div>
     </div>
   </section>
 
   <!-- PILLARS -->
-  <section class="pillars" id="work">
-    <div class="pillar" id="research">
+  <section class="pillars stagger-children" id="work">
+    <a class="pillar pillar-link" href="research.html" id="research">
       <span class="pillar-number">01</span>
       <div class="pillar-title">Research</div>
       <p class="pillar-desc">PhD exploring the intersection between energy equity, energy flexibility, and energy inclusion. I study the potential impact of energy communities in the UK energy transition.</p>
       <span class="pillar-status">· Active — year 2 of 4</span>
-    </div>
-    <div class="pillar" id="writing">
+    </a>
+    <a class="pillar pillar-link" href="writing.html" id="writing">
       <span class="pillar-number">02</span>
       <div class="pillar-title">Writing</div>
-      <p class="pillar-desc">Weekly essays on energy, institutions, and the political choices hidden inside technical systems. <a href="https://fedegam.substack.com/p/who-i-am-and-why-i-write" target="_blank" rel="noopener noreferrer">Read why I write on Substack.</a></p>
+      <p class="pillar-desc">Weekly essays on energy, institutions, and the political choices hidden inside technical systems.</p>
       <span class="pillar-status">· Weekly</span>
-    </div>
+    </a>
     <div class="pillar" id="building">
       <span class="pillar-number">03</span>
       <div class="pillar-title">Building</div>
       <p class="pillar-desc">Using my toolbox to build something new. Stay tuned.</p>
       <span class="pillar-status">· In progress</span>
     </div>
-    <div class="pillar" id="podcast">
+    <a class="pillar pillar-link" href="podcast.html" id="podcast">
       <span class="pillar-number">04</span>
       <div class="pillar-title">Podcast</div>
       <p class="pillar-desc">Follow Ross Horlock and me on our podcast on AI and society. We host weekly debates on how the future could look and what we need to do today to make it resilient.</p>
       <span class="pillar-status">· Weekly</span>
-    </div>
+    </a>
   </section>
 
   <!-- LIVE FEEDS -->
-  <div class="feeds-header" id="feed">
+  <div class="feeds-header reveal" id="feed">
     <div class="feeds-title">Latest from the work</div>
     <div class="live-badge"><div class="live-dot"></div> Live feed</div>
   </div>
 
-  <div class="feed-grid">
+  <div class="feed-grid reveal">
     <div class="feed-col">
       <div class="feed-col-header">
         <span class="feed-col-label">Writing — Substack</span>
@@ -162,7 +161,7 @@
   </div>
 
   <!-- YOUTUBE -->
-  <div class="yt-section">
+  <div class="yt-section reveal-scale">
     <div class="yt-header">
       <span class="yt-label">Video — 2Humans on YouTube</span>
       <a class="yt-link" href="https://www.youtube.com/playlist?list=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp" target="_blank" rel="noopener noreferrer">Visit playlist →</a>
@@ -179,12 +178,12 @@
   </div>
 
   <!-- PODCAST EPISODES -->
-  <section class="episodes-section" id="podcast-episodes">
+  <section class="episodes-section reveal" id="podcast-episodes">
     <div class="episodes-header">
       <span class="episodes-label">Podcast Episodes — 2Humans</span>
       <a class="episodes-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">Browse all episodes →</a>
     </div>
-    <div class="episodes-grid" id="episode-cards">
+    <div class="episodes-grid stagger-children" id="episode-cards">
       <article class="episode-card-skeleton"></article>
       <article class="episode-card-skeleton"></article>
       <article class="episode-card-skeleton"></article>
@@ -192,28 +191,27 @@
   </section>
 
   <!-- MANIFESTO -->
-  <section class="manifesto">
+  <section class="manifesto reveal-scale">
     <p class="manifesto-quote">"The systems that run our world were designed. They can be redesigned."</p>
     <p class="manifesto-attr">On energy, technology, and the politics of fairness</p>
   </section>
 
   <!-- ABOUT -->
-  <section class="about-strip" id="about">
+  <section class="about-strip reveal" id="about">
     <div class="about-left">
       <span class="about-label">About</span>
     </div>
     <div class="about-right">
       <figure class="about-portrait">
-        <img src="assets/portraits/federico-portrait.jpg" alt="Federico Gambedotti portrait">
+        <img src="assets/portraits/federico-portrait.jpg" alt="Federico Gambedotti portrait" loading="lazy">
       </figure>
-      <p class="about-text">I am a PhD researcher at UCL, a writer, a startup builder, and co-host of the 2Humans podcast. My work sits at the intersection of energy, equity, and institutional design — with a broader interest in how technology and better ideas can improve people's lives.</p>
-      <p class="about-text">I do not see research, writing, and building as separate pursuits. They are different ways of studying the same questions and contributing to the same goal: systems that serve everyone, not just those already at the top.</p>
-      <a href="https://fedegam.substack.com" class="about-cta" target="_blank" rel="noopener noreferrer">Read my writing →</a>
+      <p class="about-text">PhD researcher at UCL, writer, startup builder, and co-host of the 2Humans podcast. I work at the intersection of energy, equity, and institutional design.</p>
+      <a href="about.html" class="about-cta">Read full profile →</a>
     </div>
   </section>
 
   <!-- SUBSCRIBE -->
-  <section class="subscribe">
+  <section class="subscribe reveal">
     <div class="sub-left">
       <div class="sub-headline">Follow the thinking<br>as it develops.</div>
       <p class="sub-desc">Weekly writing on energy, systems, and the politics of fairness. No noise — just the work.</p>
@@ -237,19 +235,9 @@
   </footer>
   <div class="reach-line">
     You can reach me on
-    <a href="https://www.linkedin.com/in/federicogambedotti/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.35rem;">
-      <svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zM4.943 13.5V6.169H2.542V13.5zm-1.2-8.332c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.21 2.4 3.92c0 .694.521 1.248 1.327 1.248m2.53 8.332h2.401V9.409c0-.219.016-.438.08-.594.175-.437.574-.89 1.244-.89.878 0 1.229.672 1.229 1.656V13.5h2.401V9.303c0-2.248-1.2-3.294-2.8-3.294-1.291 0-1.86.711-2.181 1.212h.016V6.169H6.273c.03.694 0 7.331 0 7.331"/>
-      </svg>
-      LinkedIn
-    </a>
+    <a href="https://www.linkedin.com/in/federicogambedotti/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
     and
-    <a href="https://x.com/FedericoGambed2" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.35rem;">
-      <svg aria-hidden="true" width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
-        <path d="M9.294 6.928 14.357 1h-1.2l-4.396 5.147L5.25 1H1.2l5.31 7.73L1.2 15h1.2l4.642-5.435L10.75 15h4.05zM7.65 8.85l-.538-.77L2.83 1.95h1.843l3.454 4.944.538.77 4.49 6.426h-1.842z"/>
-      </svg>
-      X
-    </a>.
+    <a href="https://x.com/FedericoGambed2" target="_blank" rel="noopener noreferrer">X</a>.
   </div>
 
   <script src="script.js"></script>
