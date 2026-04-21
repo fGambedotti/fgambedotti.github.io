@@ -514,6 +514,157 @@ nav {
   border: none;
 }
 
+/* ── PODCAST CARDS ───────────────────────────────────────── */
+.episodes-section {
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.episodes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.6rem 3rem 1.2rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.episodes-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.episodes-link {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.episodes-link:hover { text-decoration: underline; }
+
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  padding: 1.25rem 3rem 2rem;
+}
+
+.episode-card {
+  background: #161513;
+  color: #f1eee8;
+  border: 1px solid rgba(241, 238, 232, 0.08);
+  text-decoration: none;
+  display: block;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.episode-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(241, 238, 232, 0.22);
+}
+
+.episode-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #27231f;
+  border-bottom: 1px solid rgba(241, 238, 232, 0.08);
+  overflow: hidden;
+}
+
+.episode-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.episode-card-body {
+  padding: 1rem 1rem 0.95rem;
+}
+
+.episode-topline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.65rem;
+}
+
+.episode-num {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c8c2b8;
+}
+
+.episode-date {
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #ada79d;
+}
+
+.episode-card-title {
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.35;
+  color: #f5f1ea;
+  margin-bottom: 0.55rem;
+}
+
+.episode-question {
+  font-size: 0.76rem;
+  line-height: 1.65;
+  color: #cbc5bb;
+  margin-bottom: 0.85rem;
+}
+
+.episode-duration {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d3cdc2;
+  margin-bottom: 0.75rem;
+}
+
+.episode-platforms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.episode-platforms a {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #e9e3d8;
+  text-decoration: none;
+  border: 1px solid rgba(233, 227, 216, 0.32);
+  padding: 0.28rem 0.48rem;
+}
+
+.episode-platforms a:hover {
+  border-color: rgba(233, 227, 216, 0.66);
+}
+
+.episode-card-skeleton {
+  min-height: 340px;
+  background: linear-gradient(120deg, #1c1a18 0%, #24211e 50%, #1c1a18 100%);
+  background-size: 200% 100%;
+  animation: shimmerCard 1.4s infinite;
+  border: 1px solid rgba(241, 238, 232, 0.08);
+}
+
+@keyframes shimmerCard {
+  0% { background-position: 0 0; }
+  100% { background-position: -200% 0; }
+}
+
 /* ── MANIFESTO ───────────────────────────────────────────── */
 .manifesto {
   padding: 5rem 3rem;
@@ -692,6 +843,42 @@ nav {
 
 .sub-note a { color: var(--accent); text-decoration: none; }
 
+/* ── QUOTE OF THE DAY ───────────────────────────────────── */
+.daily-quote-section {
+  border-bottom: 0.5px solid var(--rule);
+  padding: 2.5rem 3rem 2.8rem;
+  background: var(--paper-warm);
+}
+
+.daily-quote-inner {
+  max-width: 74ch;
+}
+
+.daily-quote-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 0.9rem;
+}
+
+.daily-quote-text {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  line-height: 1.55;
+  color: var(--ink);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.daily-quote-author {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
 /* ── FOOTER ──────────────────────────────────────────────── */
 footer {
   display: flex;
@@ -763,6 +950,12 @@ footer {
   .yt-header { padding: 1.25rem 1.5rem; }
   .yt-embed { padding-bottom: 56%; }
 
+  .episodes-header { padding: 1.25rem 1.5rem; }
+  .episodes-grid {
+    grid-template-columns: 1fr;
+    padding: 1rem 1.5rem 1.5rem;
+  }
+
   .manifesto { padding: 3.5rem 1.5rem; }
 
   .about-strip { grid-template-columns: 1fr; }
@@ -772,6 +965,8 @@ footer {
   .subscribe { grid-template-columns: 1fr; }
   .sub-left { padding: 2rem 1.5rem; border-right: none; border-bottom: 0.5px solid var(--rule); }
   .sub-right { padding: 2rem 1.5rem; }
+
+  .daily-quote-section { padding: 1.8rem 1.5rem 2rem; }
 
   footer { flex-direction: column; gap: 1.25rem; padding: 1.5rem; text-align: center; }
   .footer-links { flex-wrap: wrap; justify-content: center; gap: 1.25rem; }
