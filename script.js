@@ -5,7 +5,7 @@
 
 // ── CONFIG ────────────────────────────────────────────────
 const CONFIG = {
-  substackFeed: 'https://api.rss2json.com/v1/api.json?rss_url=https://fedegam.substack.com/feed&count=3',
+  substackFeed: 'https://api.rss2json.com/v1/api.json?rss_url=https://fedegam.substack.com/feed',
   // Replace the URL below with your actual podcast RSS feed when available
   // e.g. https://feeds.transistor.fm/2humans-podcast
   podcastFeeds: [
