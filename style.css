@@ -399,6 +399,27 @@ a.pillar-link:hover .pillar-title {
   font-weight: 500;
 }
 
+.pillar-vote-btn {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 0.66rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--paper);
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 999px;
+  padding: 0.45rem 0.8rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+a.pillar-link:hover .pillar-vote-btn {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
 /* ?? LIVE FEEDS ???????????????????????????????????????????? */
 .feeds-header {
   display: flex;
@@ -517,6 +538,51 @@ a.pillar-link:hover .pillar-title {
 
 .article-item:last-child { border-bottom: none; padding-bottom: 0; }
 .article-item:hover { opacity: 0.65; }
+
+.article-main {
+  min-width: 0;
+}
+
+.article-item--with-thumb {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.article-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 0.5px solid var(--rule);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--paper-warm);
+}
+
+.article-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.article-thumb--placeholder {
+  background:
+    linear-gradient(135deg, rgba(29, 78, 58, 0.12), rgba(29, 78, 58, 0.02)),
+    var(--paper-warm);
+  position: relative;
+}
+
+.article-thumb--placeholder::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 34px;
+  height: 34px;
+  opacity: 0.45;
+  background: url("assets/icons/icon-writing.png") center/contain no-repeat;
+}
 
 .article-date {
   font-size: 0.72rem;
@@ -884,11 +950,11 @@ a.pillar-link:hover .pillar-title {
 }
 
 .about-right {
-  padding: 3rem 3.5rem;
+  padding: 2.2rem 3.5rem;
   display: grid;
-  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
-  gap: 2.25rem;
-  align-items: start;
+  grid-template-columns: minmax(110px, 150px) minmax(0, 1fr);
+  gap: 1.4rem;
+  align-items: center;
 }
 
 .about-copy {
@@ -909,7 +975,9 @@ a.pillar-link:hover .pillar-title {
 
 .about-strip .about-portrait {
   width: 100%;
+  max-width: 150px;
   margin: 0;
+  border-radius: 4px;
 }
 
 .about-portrait img {
@@ -1587,16 +1655,21 @@ footer {
   .feeds-header { padding: 1.5rem; }
   .feed-grid { grid-template-columns: 1fr; }
   .feed-col { padding: 1.5rem; border-right: none; border-bottom: 0.5px solid var(--rule); }
+  .article-item--with-thumb {
+    grid-template-columns: 132px minmax(0, 1fr);
+    gap: 0.85rem;
+  }
   .yt-header { padding: 1.25rem 1.5rem; }
   .yt-embed { padding-bottom: 56%; }
   .episodes-header { padding: 1.25rem 1.5rem; }
   .episodes-grid { grid-template-columns: 1fr; padding: 1rem 1.5rem 1.5rem; }
   .about-right {
     padding: 2rem 1.5rem;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(96px, 132px) minmax(0, 1fr);
     gap: 1.25rem;
+    align-items: start;
   }
-  .about-portrait { width: 100%; }
+  .about-strip .about-portrait { width: 100%; max-width: 132px; }
   .subscribe { grid-template-columns: 1fr; }
   .sub-left { padding: 2rem 1.5rem; border-right: none; border-bottom: 0.5px solid var(--rule); }
   .sub-right { padding: 2rem 1.5rem; }
@@ -1618,9 +1691,293 @@ footer {
   }
 }
 
+@media (max-width: 700px) {
+  .about-right { grid-template-columns: 1fr; }
+  .about-strip .about-portrait { width: min(240px, 100%); max-width: none; }
+}
+
 @media (max-width: 520px) {
   .pillars { grid-template-columns: 1fr; }
   .hero-headline { font-size: clamp(1.38rem, 7.32vw, 1.95rem); }
+  .article-item--with-thumb {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  .article-thumb {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+/* ── BUILDING PAGE ───────────────────────────────────────── */
+
+/* Section A — Serious projects */
+.serious-project {
+  margin-bottom: 2.5rem;
+}
+
+.serious-project-header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.serious-project-name {
+  font-family: var(--serif);
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.serious-project-desc {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.75rem;
+  line-height: 1.6;
+}
+
+.serious-project-contact {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+.serious-project-contact a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent-light);
+}
+
+.serious-project-contact a:hover {
+  border-bottom-color: var(--accent);
+}
+
+.serious-project-divider {
+  width: 100%;
+  height: 0.5px;
+  background: var(--rule);
+  margin: 2rem 0;
+}
+
+/* Section B — Open Experiments header */
+.building-section {
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.building-section-header {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 3rem;
+  padding: 3.5rem 3rem 2rem;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.building-section-title {
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 2.6vw, 2.5rem);
+  font-weight: 400;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.building-section-intro {
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  font-weight: 300;
+  max-width: 55ch;
+}
+
+/* Experiment grid */
+.experiment-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.experiment-card {
+  padding: 2.5rem 3rem;
+  border-right: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: background 0.25s ease;
+}
+
+.experiment-card:nth-child(even) {
+  border-right: none;
+}
+
+.experiment-card:hover {
+  background: var(--paper-warm);
+}
+
+.experiment-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.experiment-name {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.experiment-status {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-light);
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+.experiment-desc {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.experiment-context {
+  font-size: 0.88rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+  font-weight: 300;
+}
+
+/* Vote block */
+.vote-block {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.vote-count-label {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.vote-bar-wrap {
+  width: 100%;
+  height: 8px;
+  background: var(--paper-warm);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.vote-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 4px;
+  width: 0%;
+  transition: width 0.6s ease;
+}
+
+.vote-pct-label {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+
+.vote-commitment {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* Vote form */
+.vote-form {
+  display: flex;
+  gap: 0;
+  border: 0.5px solid var(--rule);
+  background: var(--paper);
+  margin-top: 0.5rem;
+}
+
+.vote-email {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  padding: 0.65rem 0.85rem;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  outline: none;
+  flex: 1;
+  min-width: 0;
+}
+
+.vote-email::placeholder {
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.vote-btn {
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.65rem 1rem;
+  background: var(--accent);
+  color: var(--paper);
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.vote-btn:hover {
+  background: var(--accent-hover);
+}
+
+.vote-error {
+  font-size: 0.72rem;
+  color: #b00020;
+  min-height: 1em;
+}
+
+.vote-confirmed {
+  font-size: 0.82rem;
+  color: var(--accent);
+  font-style: italic;
+  padding: 0.5rem 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .building-section-header {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 2rem 1.5rem 1.5rem;
+  }
+
+  .building-section-title {
+    font-size: 1.7rem;
+  }
+
+  .experiment-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .experiment-card {
+    border-right: none;
+    padding: 2rem 1.5rem;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

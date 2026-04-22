@@ -66,6 +66,27 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
+function extractFirstImageFromHtml(html) {
+  const match = String(html || '').match(/<img[^>]+src=["']([^"']+)["']/i);
+  return match ? match[1] : '';
+}
+
+function getSubstackItemImage(item) {
+  if (!item) return '';
+  if (item.thumbnail) return item.thumbnail;
+
+  const enclosureLink = item.enclosure && typeof item.enclosure === 'object' ? item.enclosure.link : '';
+  if (enclosureLink) return enclosureLink;
+
+  const fromDescription = extractFirstImageFromHtml(item.description);
+  if (fromDescription) return fromDescription;
+
+  const fromContent = extractFirstImageFromHtml(item.content);
+  if (fromContent) return fromContent;
+
+  return '';
+}
+
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
@@ -127,15 +148,31 @@ async function loadSubstack() {
     const data = await res.json();
     if (!data.items || data.items.length === 0) throw new Error('No items');
 
-    el.innerHTML = data.items.slice(0, 3).map(item => `
-      <a class="article-item" href="${item.link}" target="_blank" rel="noopener">
-        <div class="article-date">${fmtDate(item.pubDate)}</div>
-        <div class="article-title">${item.title}</div>
-        <div class="article-excerpt">${stripHtml(item.description).slice(0, 130)}…</div>
+    const isWritingPage = /(^|\/)writing\.html$/.test(window.location.pathname);
+    const showArticleImages = isWritingPage;
+    const articleLimit = isWritingPage ? 4 : 3;
+
+    el.innerHTML = data.items.slice(0, articleLimit).map((item) => {
+      const imageSrc = getSubstackItemImage(item);
+      const excerpt = `${stripHtml(item.description).slice(0, 140)}…`;
+      const articleClass = showArticleImages ? 'article-item article-item--with-thumb' : 'article-item';
+
+      return `
+      <a class="${articleClass}" href="${item.link}" target="_blank" rel="noopener noreferrer">
+        ${showArticleImages ? `
+        <div class="article-thumb ${imageSrc ? '' : 'article-thumb--placeholder'}">
+          ${imageSrc ? `<img src="${imageSrc}" alt="${escapeHtml(item.title)} cover image" loading="lazy">` : ''}
+        </div>` : ''}
+        <div class="article-main">
+          <div class="article-date">${fmtDate(item.pubDate)}</div>
+          <div class="article-title">${item.title}</div>
+          <div class="article-excerpt">${excerpt}</div>
+        </div>
       </a>
-    `).join('');
+    `;
+    }).join('');
   } catch (e) {
-    el.innerHTML = `<p class="error-msg">Read the latest on <a href="${CONFIG.substackUrl}" target="_blank" rel="noopener">Substack →</a></p>`;
+    el.innerHTML = `<p class="error-msg">Read the latest on <a href="${CONFIG.substackUrl}" target="_blank" rel="noopener noreferrer">Substack →</a></p>`;
   }
 }
 
@@ -540,3 +577,92 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeroHoverFlip();
   initHeroKeywordCloud();
 });
+
+// ── VOTE SYSTEM ───────────────────────────────────────────
+// Uses localStorage for persistence (GitHub Pages = static host only).
+// Starting counts are hardcoded offsets added to the localStorage count.
+
+const VOTE_STARTING_COUNTS = {
+  lifedash: 47,
+  zava: 38,
+  worthit: 29,
+  powerbriscola: 31,
+};
+
+function getVoteCount(slug, startCount) {
+  const stored = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
+  return startCount + stored;
+}
+
+function hasVoted(slug) {
+  return localStorage.getItem('voted_' + slug) === 'true';
+}
+
+function castVote(slug) {
+  const current = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
+  localStorage.setItem('votes_' + slug, String(current + 1));
+  localStorage.setItem('voted_' + slug, 'true');
+}
+
+function renderVoteBlock(card) {
+  const slug = card.dataset.slug;
+  const goal = parseInt(card.dataset.goal, 10);
+  const start = parseInt(card.dataset.start, 10);
+  const commitment = card.dataset.commitment;
+
+  const countLabel = card.querySelector('.vote-count-label');
+  const barFill = card.querySelector('.vote-bar-fill');
+  const pctLabel = card.querySelector('.vote-pct-label');
+  const commitmentEl = card.querySelector('.vote-commitment');
+  const formArea = card.querySelector('.vote-form-area');
+  const emailInput = card.querySelector('.vote-email');
+  const voteBtn = card.querySelector('.vote-btn');
+  const errorEl = card.querySelector('.vote-error');
+
+  const count = getVoteCount(slug, start);
+  const pct = Math.min(100, Math.round((count / goal) * 100));
+
+  countLabel.textContent = count.toLocaleString() + ' votes toward ' + goal.toLocaleString();
+  barFill.style.width = pct + '%';
+  pctLabel.textContent = pct + '% of the way there';
+  commitmentEl.textContent = commitment;
+
+  if (hasVoted(slug)) {
+    formArea.innerHTML = '<p class=\"vote-confirmed\">You have already voted for this — thanks! We will be in touch.</p>';
+    return;
+  }
+
+  voteBtn.addEventListener('click', () => {
+    const email = emailInput.value.trim();
+    if (!email || !email.includes('@')) {
+      errorEl.textContent = 'Please enter a valid email address.';
+      emailInput.focus();
+      return;
+    }
+    errorEl.textContent = '';
+    castVote(slug);
+
+    const newCount = getVoteCount(slug, start);
+    const newPct = Math.min(100, Math.round((newCount / goal) * 100));
+    countLabel.textContent = newCount.toLocaleString() + ' votes toward ' + goal.toLocaleString();
+    barFill.style.width = newPct + '%';
+    pctLabel.textContent = newPct + '% of the way there';
+
+    const projectName = card.querySelector('.experiment-name').textContent;
+    formArea.innerHTML = '<p class=\"vote-confirmed\">Vote counted — thank you. I will email you when ' + projectName + ' launches.</p>';
+  });
+
+  emailInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') voteBtn.click();
+  });
+}
+
+function initVoteSystem() {
+  const cards = document.querySelectorAll('.experiment-card');
+  cards.forEach(renderVoteBlock);
+}
+
+// Only initialise on the building page
+if (document.querySelector('.experiment-card')) {
+  document.addEventListener('DOMContentLoaded', initVoteSystem);
+}
