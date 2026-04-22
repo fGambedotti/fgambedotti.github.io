@@ -283,7 +283,7 @@ nav {
 
 .hero-keyword-current {
   font-family: var(--future);
-  font-size: clamp(1.25rem, 2.7vw, 1.72rem);
+  font-size: clamp(2.5rem, 5.4vw, 3.44rem);
   line-height: 1.08;
   letter-spacing: 0;
   background: linear-gradient(92deg, #8cebd0 0%, #7fd7ff 44%, #c9b7ff 100%);
@@ -489,6 +489,10 @@ a.pillar-link:hover .pillar-title {
 
 .icon-podcast {
   background-image: url("assets/icons/icon-podcast.png");
+}
+
+.icon-call {
+  background-image: url("assets/icons/icon-call.png");
 }
 
 .feed-col-link {
@@ -876,32 +880,22 @@ a.pillar-link:hover .pillar-title {
 
 /* ?? ABOUT ????????????????????????????????????????????????? */
 .about-strip {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
   border-bottom: 0.5px solid var(--rule);
-}
-
-.about-left {
-  padding: 3rem;
-  border-right: 0.5px solid var(--rule);
-  display: flex;
-  align-items: flex-start;
-}
-
-.about-label {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
 }
 
 .about-right {
   padding: 3rem 3.5rem;
+  display: grid;
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+  gap: 2.25rem;
+  align-items: start;
+}
+
+.about-copy {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.25rem;
+  justify-content: center;
 }
 
 .about-portrait {
@@ -911,6 +905,11 @@ a.pillar-link:hover .pillar-title {
   border: 0.5px solid var(--rule);
   background: #d8d3c9;
   margin-bottom: 0.5rem;
+}
+
+.about-strip .about-portrait {
+  width: 100%;
+  margin: 0;
 }
 
 .about-portrait img {
@@ -968,16 +967,16 @@ a.pillar-link:hover .pillar-title {
   font-family: var(--serif);
   font-size: 1.45rem;
   font-weight: 400;
-  line-height: 1.35;
+  line-height: 1.2;
   color: var(--ink);
 }
 
 .sub-desc {
   font-size: 0.95rem;
-  line-height: 1.8;
+  line-height: 1.6;
   color: var(--ink-soft);
   font-weight: 300;
-  max-width: 36ch;
+  max-width: none;
 }
 
 .sub-right {
@@ -1039,6 +1038,48 @@ a.pillar-link:hover .pillar-title {
 
 .sub-feedback[data-state="error"] { color: #b00020; }
 .sub-note a { color: var(--accent); text-decoration: none; }
+
+.sub-callout {
+  margin-top: 0.2rem;
+  padding-top: 0.85rem;
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.sub-callout-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+
+.sub-callout-icon {
+  width: 0.95em;
+  height: 0.95em;
+  display: inline-block;
+  object-fit: contain;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.sub-callout-link {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-size: 0.92rem;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 0.12rem;
+}
+
+.sub-callout-link:hover { opacity: 0.75; }
 
 /* ?? QUOTE SECTION ????????????????????????????????????????? */
 .quote-wrapper {
@@ -1540,7 +1581,7 @@ footer {
   .nav-links.open { display: flex; }
   .hero { grid-template-columns: 1fr; min-height: auto; }
   .hero-left { padding: 3.8rem 2rem; border-right: none; border-bottom: 1px solid var(--hero-rule); }
-  .hero-keyword-current { font-size: clamp(1.02rem, 4.6vw, 1.34rem); }
+  .hero-keyword-current { font-size: clamp(1.9rem, 8.6vw, 2.6rem); }
   .pillars { grid-template-columns: 1fr; }
   .pillar { border-bottom: 0.5px solid var(--rule); }
   .feeds-header { padding: 1.5rem; }
@@ -1550,9 +1591,11 @@ footer {
   .yt-embed { padding-bottom: 56%; }
   .episodes-header { padding: 1.25rem 1.5rem; }
   .episodes-grid { grid-template-columns: 1fr; padding: 1rem 1.5rem 1.5rem; }
-  .about-strip { grid-template-columns: 1fr; }
-  .about-left { display: none; }
-  .about-right { padding: 2rem 1.5rem; }
+  .about-right {
+    padding: 2rem 1.5rem;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
   .about-portrait { width: 100%; }
   .subscribe { grid-template-columns: 1fr; }
   .sub-left { padding: 2rem 1.5rem; border-right: none; border-bottom: 0.5px solid var(--rule); }
