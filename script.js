@@ -398,10 +398,10 @@ function initHeroWordAnimation() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  const typeStep = 0.085;
-  const letterDuration = 0.34;
+  const typeStep = 0.34;
+  const letterDuration = 1.36;
   const startDelay = 0.2;
-  const gapBetweenWords = 0.34;
+  const gapBetweenWords = 1.36;
 
   const prepareWord = (wordEl, delayStart) => {
     const text = wordEl.textContent.trim();
