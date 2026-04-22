@@ -471,11 +471,9 @@ const HERO_KEYWORDS = [
 function initHeroKeywordCloud() {
   const cloud = document.getElementById('hero-keyword-cloud');
   const currentEl = document.getElementById('hero-keyword-current');
-  const backgroundEl = document.getElementById('hero-keyword-bg');
-  if (!cloud || !currentEl || !backgroundEl) return;
+  if (!cloud || !currentEl) return;
 
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const keywordItems = Array.from(cloud.querySelectorAll('.hero-keyword-item'));
   if (!HERO_KEYWORDS.length) return;
 
   let currentIndex = Math.floor(Math.random() * HERO_KEYWORDS.length);
@@ -484,18 +482,11 @@ function initHeroKeywordCloud() {
   const syncKeywordState = (nextIndex, animate) => {
     const keyword = HERO_KEYWORDS[nextIndex];
     currentEl.textContent = keyword;
-    backgroundEl.textContent = keyword;
-
-    keywordItems.forEach((item) => {
-      item.classList.toggle('is-active', item.dataset.keyword === keyword);
-    });
 
     if (animate && !prefersReducedMotion) {
       currentEl.classList.remove('is-swapping');
-      backgroundEl.classList.remove('is-swapping');
       void currentEl.offsetWidth;
       currentEl.classList.add('is-swapping');
-      backgroundEl.classList.add('is-swapping');
     }
   };
 
