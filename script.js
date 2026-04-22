@@ -398,10 +398,11 @@ function initHeroWordAnimation() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReducedMotion) return;
 
-  const typeStep = 0.34;
-  const letterDuration = 1.36;
-  const startDelay = 0.2;
-  const gapBetweenWords = 1.36;
+  const speedMultiplier = 1.5; // 50% faster
+  const typeStep = 0.34 / speedMultiplier;
+  const letterDuration = 1.36 / speedMultiplier;
+  const startDelay = 0.2 / speedMultiplier;
+  const gapBetweenWords = 1.36 / speedMultiplier;
 
   const prepareWord = (wordEl, delayStart) => {
     const text = wordEl.textContent.trim();
@@ -476,6 +477,7 @@ function initHeroKeywordCloud() {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!HERO_KEYWORDS.length) return;
 
+  const speedMultiplier = 1.5; // 50% faster
   let currentIndex = Math.floor(Math.random() * HERO_KEYWORDS.length);
   let lastAdvanceAt = 0;
 
@@ -501,7 +503,7 @@ function initHeroKeywordCloud() {
 
   const advanceKeyword = () => {
     const now = performance.now();
-    if (now - lastAdvanceAt < 350) return;
+    if (now - lastAdvanceAt < 350 / speedMultiplier) return;
     lastAdvanceAt = now;
     currentIndex = getNextIndex();
     syncKeywordState(currentIndex, true);
@@ -509,7 +511,7 @@ function initHeroKeywordCloud() {
 
   syncKeywordState(currentIndex, false);
 
-  const intervalId = window.setInterval(advanceKeyword, 5000);
+  const intervalId = window.setInterval(advanceKeyword, 5000 / speedMultiplier);
   cloud.addEventListener('mouseenter', advanceKeyword);
 
   document.addEventListener('visibilitychange', () => {

@@ -224,13 +224,13 @@ nav {
 
 .hero-word-past.is-typing .hero-letter,
 .hero-word-future.is-typing .hero-letter {
-  animation: heroTypeLetter 1.36s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  animation: heroTypeLetter 0.91s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
   animation-delay: var(--letter-delay, 0s);
 }
 
 .hero-word-past.is-flip,
 .hero-word-future.is-flip {
-  animation: heroWordFlip 0.36s cubic-bezier(0.22, 0.68, 0.28, 1) 1;
+  animation: heroWordFlip 0.24s cubic-bezier(0.22, 0.68, 0.28, 1) 1;
 }
 
 @keyframes heroTypeLetter {
@@ -295,7 +295,7 @@ nav {
 }
 
 .hero-keyword-current.is-swapping {
-  animation: keywordSwapIn 0.44s cubic-bezier(0.2, 0.8, 0.2, 1);
+  animation: keywordSwapIn 0.29s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 @keyframes keywordSwapIn {
