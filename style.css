@@ -1945,6 +1945,16 @@ footer {
   background: var(--accent-hover);
 }
 
+.vote-btn:disabled {
+  background: var(--ink-muted);
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.vote-btn:disabled:hover {
+  background: var(--ink-muted);
+}
+
 .vote-error {
   font-size: 0.72rem;
   color: #b00020;

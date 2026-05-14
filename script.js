@@ -588,10 +588,12 @@ const VOTE_STARTING_COUNTS = {
   worthit: 29,
   powerbriscola: 31,
 };
+const VOTE_PROGRESS_TARGET = 1000;
 
 function getVoteCount(slug, startCount) {
   const stored = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
-  return startCount + stored;
+  const safeStored = Number.isFinite(stored) ? stored : 0;
+  return startCount + safeStored;
 }
 
 function hasVoted(slug) {
@@ -600,14 +602,26 @@ function hasVoted(slug) {
 
 function castVote(slug) {
   const current = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
-  localStorage.setItem('votes_' + slug, String(current + 1));
+  const safeCurrent = Number.isFinite(current) ? current : 0;
+  localStorage.setItem('votes_' + slug, String(safeCurrent + 1));
   localStorage.setItem('voted_' + slug, 'true');
+}
+
+function getStartCount(slug, datasetStart) {
+  if (Number.isFinite(datasetStart)) return datasetStart;
+  return VOTE_STARTING_COUNTS[slug] || 0;
+}
+
+function updateVoteDisplay(countLabel, barFill, pctLabel, count) {
+  const pct = Math.min(100, Math.round((count / VOTE_PROGRESS_TARGET) * 100));
+  countLabel.textContent = count.toLocaleString() + ' votes toward ' + VOTE_PROGRESS_TARGET.toLocaleString();
+  barFill.style.width = pct + '%';
+  pctLabel.textContent = pct + '% of the way there';
 }
 
 function renderVoteBlock(card) {
   const slug = card.dataset.slug;
-  const goal = parseInt(card.dataset.goal, 10);
-  const start = parseInt(card.dataset.start, 10);
+  const start = getStartCount(slug, parseInt(card.dataset.start, 10));
   const commitment = card.dataset.commitment;
 
   const countLabel = card.querySelector('.vote-count-label');
@@ -620,11 +634,7 @@ function renderVoteBlock(card) {
   const errorEl = card.querySelector('.vote-error');
 
   const count = getVoteCount(slug, start);
-  const pct = Math.min(100, Math.round((count / goal) * 100));
-
-  countLabel.textContent = count.toLocaleString() + ' votes toward ' + goal.toLocaleString();
-  barFill.style.width = pct + '%';
-  pctLabel.textContent = pct + '% of the way there';
+  updateVoteDisplay(countLabel, barFill, pctLabel, count);
   commitmentEl.textContent = commitment;
 
   if (hasVoted(slug)) {
@@ -632,9 +642,17 @@ function renderVoteBlock(card) {
     return;
   }
 
+  function syncVoteButtonState() {
+    const hasAnyEmailInput = emailInput.value.trim().length > 0;
+    voteBtn.disabled = !hasAnyEmailInput;
+  }
+
+  syncVoteButtonState();
+
   voteBtn.addEventListener('click', () => {
+    if (voteBtn.disabled) return;
     const email = emailInput.value.trim();
-    if (!email || !email.includes('@')) {
+    if (!isValidEmail(email)) {
       errorEl.textContent = 'Please enter a valid email address.';
       emailInput.focus();
       return;
@@ -643,10 +661,7 @@ function renderVoteBlock(card) {
     castVote(slug);
 
     const newCount = getVoteCount(slug, start);
-    const newPct = Math.min(100, Math.round((newCount / goal) * 100));
-    countLabel.textContent = newCount.toLocaleString() + ' votes toward ' + goal.toLocaleString();
-    barFill.style.width = newPct + '%';
-    pctLabel.textContent = newPct + '% of the way there';
+    updateVoteDisplay(countLabel, barFill, pctLabel, newCount);
 
     const projectName = card.querySelector('.experiment-name').textContent;
     formArea.innerHTML = '<p class=\"vote-confirmed\">Vote counted — thank you. I will email you when ' + projectName + ' launches.</p>';
@@ -654,6 +669,11 @@ function renderVoteBlock(card) {
 
   emailInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') voteBtn.click();
+  });
+
+  emailInput.addEventListener('input', () => {
+    if (errorEl.textContent) errorEl.textContent = '';
+    syncVoteButtonState();
   });
 }
 
