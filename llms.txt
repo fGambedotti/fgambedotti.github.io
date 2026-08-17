@@ -1,0 +1,29 @@
+# Federico Gambedotti
+
+Federico Gambedotti is a London-based PhD researcher at University College London, startup builder, writer, and co-host of the 2Humans podcast. His work focuses on energy equity, community energy, flexibility, demand reduction, artificial intelligence, and institutional design.
+
+## Main sections
+
+- Home: https://fgambedotti.github.io/
+- Research: https://fgambedotti.github.io/research.html
+- Building: https://fgambedotti.github.io/building.html
+- Writing: https://fgambedotti.github.io/writing.html
+- Podcast: https://fgambedotti.github.io/podcast.html
+- About and contact: https://fgambedotti.github.io/about.html
+
+## Current work
+
+- Research: how energy communities, flexibility, and demand reduction can support a fairer UK energy transition.
+- Building: validating Power Haven, which connects data-centre batteries to electricity-grid flexibility needs.
+- Writing: selected essays about energy, AI, institutions, and society on Substack.
+- Podcast: 2Humans, co-hosted with Ross Horlock, discussing AI, energy, economics, and politics.
+
+## Feeds
+
+- Writing RSS: https://fedegam.substack.com/feed
+- Podcast RSS: https://api.riverside.fm/hosting/pIG3KzWv.rss
+
+## Contact
+
+- Email: federico.gambedotti.23@ucl.ac.uk
+- LinkedIn: https://www.linkedin.com/in/federicogambedotti/

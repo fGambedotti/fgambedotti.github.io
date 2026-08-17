@@ -1,131 +1,97 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="2Humans podcast with Federico Gambedotti and Ross Horlock — weekly debates on AI, energy, and society.">
-  <meta name="theme-color" content="#f7f5f0">
-  <link rel="canonical" href="https://fgambedotti.github.io/podcast.html">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Podcast — Federico Gambedotti</title>
+  <meta name="description" content="The latest episodes of 2Humans, a podcast about AI, energy, economics, and politics.">
+  <meta name="theme-color" content="#173f31">
   <meta property="og:title" content="Podcast — Federico Gambedotti">
-  <meta property="og:description" content="2Humans: two PhD researchers, one argument a week.">
+  <meta property="og:description" content="The latest conversations from 2Humans with Federico Gambedotti and Ross Horlock.">
+  <meta property="og:image" content="https://fgambedotti.github.io/assets/social-preview.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://fgambedotti.github.io/podcast.html">
-  <meta property="og:site_name" content="Federico Gambedotti">
-  <meta property="og:image" content="https://fgambedotti.github.io/assets/social-preview.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Podcast — Federico Gambedotti">
-  <meta name="twitter:description" content="Weekly conversations on AI, energy, economics, and society.">
-  <meta name="twitter:image" content="https://fgambedotti.github.io/assets/social-preview.png">
-  <title>Podcast — Federico Gambedotti</title>
+  <link rel="canonical" href="https://fgambedotti.github.io/podcast.html">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="2Humans Podcast" href="https://api.riverside.fm/hosting/pIG3KzWv.rss">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <script>(()=>{const s=localStorage.getItem('fg-theme');document.documentElement.dataset.theme=s||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');})();</script>
+  <link rel="stylesheet" href="style.css?v=20260809">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "PodcastSeries",
+    "@id": "https://fgambedotti.github.io/podcast.html#2humans",
+    "name": "2Humans Podcast",
+    "url": "https://fgambedotti.github.io/podcast.html",
+    "description": "Weekly debates on AI, energy, economics, politics, and what a resilient future requires.",
+    "webFeed": "https://api.riverside.fm/hosting/pIG3KzWv.rss",
+    "sameAs": [
+      "https://www.youtube.com/@2HumansPodcast",
+      "https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116"
+    ]
+  }
+  </script>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-
-  <nav aria-label="Primary">
-    <a class="nav-name" href="index.html">Federico Gambedotti</a>
-    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false">&#9776;</button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="research.html">Research</a></li>
-      <li><a href="writing.html">Writing</a></li>
-      <li><a href="building.html">Building</a></li>
-      <li><a href="podcast.html">Podcast</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-
+<body class="inner-page page-podcast">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <!-- SITE-NAV:START -->
+<nav class="site-nav" aria-label="Primary">
+  <a class="nav-name" href="index.html">Federico Gambedotti</a>
+  <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false"><i class="ph ph-list" aria-hidden="true"></i></button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="research.html">Research</a></li>
+    <li><a href="building.html">Building</a></li>
+    <li><a href="writing.html">Writing</a></li>
+    <li><a class="active" href="podcast.html">Podcast</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <button class="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false"><i class="ph ph-sun" aria-hidden="true"></i><i class="ph ph-moon" aria-hidden="true"></i></button>
+</nav>
+<!-- SITE-NAV:END -->
   <main id="main-content">
     <section class="page-hero">
-      <div class="page-hero-inner">
-        <span class="page-eyebrow">04 — Podcast</span>
-        <h1 class="page-headline">2Humans.<br>Two PhD researchers.<br><em>One argument a week.</em></h1>
-        <p class="page-sub">Weekly debates on AI, energy, economics, and the forces shaping our world. Ross and Fede agree on almost everything that matters — and almost nothing about how to think about it.</p>
+      <span class="page-icon"><i class="ph ph-microphone-stage" aria-hidden="true"></i></span>
+      <div class="page-hero-copy">
+        <span class="page-eyebrow">04 · Podcast</span>
+        <h1>Two humans. One difficult question a <em>week.</em></h1>
+        <p>Ross Horlock and I debate AI, energy, economics, politics, and what a resilient future requires from us now.</p>
       </div>
     </section>
 
-    <section class="content-section reveal">
-      <div class="content-label">About the show</div>
-      <div class="content-body">
-        <h2 class="content-heading">A weekly conversation on systems, trade-offs, and the future.</h2>
-        <p class="content-text">2Humans is where we test ideas in public. Each episode focuses on one central question about AI, energy, economics, or political design — and follows the argument wherever it leads.</p>
-        <p class="content-text">The goal is not to perform certainty. The goal is to think clearly, disagree honestly, and leave listeners with better questions than we started with.</p>
+    <section class="podcast-intro reveal">
+      <div><span class="section-label">2Humans</span><h2>Thoughtful disagreement, without the theatre.</h2></div>
+      <p>Each episode begins with a question we genuinely disagree about. The point is not to win; it is to leave with a better model of the world.</p>
+      <div class="platform-links">
+        <a href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener noreferrer"><i class="ph ph-youtube-logo" aria-hidden="true"></i>YouTube</a>
+        <a href="https://open.spotify.com/search/2Humans%20Podcast" target="_blank" rel="noopener noreferrer"><i class="ph ph-spotify-logo" aria-hidden="true"></i>Find on Spotify</a>
+        <a href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer"><i class="ph ph-podcast-logo" aria-hidden="true"></i>Apple Podcasts</a>
+        <a href="https://api.riverside.fm/hosting/pIG3KzWv.rss" target="_blank" rel="noopener noreferrer"><i class="ph ph-rss-simple" aria-hidden="true"></i>Podcast RSS</a>
       </div>
     </section>
 
-    <section class="platform-strip reveal">
-      <a class="platform-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">Apple Podcasts</a>
-      <a class="platform-link" href="https://open.spotify.com/search/2Humans%20Podcast" target="_blank" rel="noopener noreferrer">Spotify</a>
-      <a class="platform-link" href="https://www.youtube.com/@2HumansPodcast" target="_blank" rel="noopener noreferrer">YouTube</a>
-    </section>
-
-    <section class="episodes-section reveal" id="podcast-episodes">
-      <div class="episodes-header">
-        <span class="episodes-label"><span class="label-icon icon-podcast" aria-hidden="true"></span>Podcast Episodes — 2Humans</span>
-        <a class="episodes-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">Browse all episodes →</a>
+    <section class="episodes-section reveal">
+      <div class="section-heading"><span class="section-label">Latest episodes</span><h2>The newest five</h2></div>
+      <div class="episodes-grid" id="podcast-cards" data-limit="5" aria-live="polite">
+        <div class="feed-loading">Fetching the latest conversations…</div>
       </div>
-      <div class="episodes-grid stagger-children" id="episode-cards">
-        <article class="episode-card-skeleton"></article>
-        <article class="episode-card-skeleton"></article>
-        <article class="episode-card-skeleton"></article>
-      </div>
-    </section>
-
-    <div class="yt-section reveal-scale">
-      <div class="yt-header">
-        <span class="yt-label">Video — 2Humans on YouTube</span>
-        <a class="yt-link" href="https://www.youtube.com/playlist?list=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp" target="_blank" rel="noopener noreferrer">Visit playlist →</a>
-      </div>
-      <div class="yt-embed">
-        <iframe
-          id="yt-latest-video"
-          src="https://www.youtube.com/embed/VVCT0J3TH6Q?rel=0&modestbranding=1"
-          allowfullscreen
-          title="Latest 2Humans Podcast video on YouTube"
-          loading="lazy">
-        </iframe>
-      </div>
-    </div>
-
-    <section class="subscribe reveal">
-      <div class="sub-left">
-        <div class="sub-headline">Follow the conversation as it evolves.</div>
-        <p class="sub-desc">Get the latest episodes and related writing on AI, energy, and society.</p>
-      </div>
-      <div class="sub-right">
-        <form class="sub-form" id="sub-form" action="https://fedegam.substack.com/subscribe" method="get" target="_blank" novalidate>
-          <input class="sub-input" type="email" id="sub-email" name="email" placeholder="Your email address" aria-label="Email address" autocomplete="email" inputmode="email" required>
-          <button class="sub-btn" type="submit" id="sub-btn">Subscribe →</button>
-        </form>
-        <p class="sub-feedback" id="sub-feedback" aria-live="polite"></p>
-        <p class="sub-note">Delivered via <a href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>. Free. Unsubscribe anytime.</p>
-      <div class="sub-callout">
-        <span class="sub-callout-title"><img class="sub-callout-icon" src="assets/icons/icon-call.png" alt="" aria-hidden="true">Let's take action — schedule a call</span>
-        <a class="sub-callout-link" href="https://calendly.com/ucbvfg0-ucl/30min" target="_blank" rel="noopener noreferrer">Book a 20 min meeting →</a>
-      </div>
-      </div>
+      <a class="text-link" href="https://www.youtube.com/@2HumansPodcast/videos" target="_blank" rel="noopener noreferrer">See every episode on YouTube <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>
     </section>
   </main>
-
-  <footer>
-    <div class="footer-name">Federico Gambedotti</div>
-    <div class="footer-copy">© 2026 Federico Gambedotti</div>
-  </footer>
-  <div class="reach-line">
-    <span class="reach-intro">Contact:</span>
-    <a id="contact-email-link" data-user="ucbvfg0" data-domain="ucl.ac.uk" href="#">Email</a>
-    <span class="reach-sep" aria-hidden="true">·</span>
+  <!-- SITE-FOOTER:START -->
+<footer class="site-footer">
+  <span>© 2026 Federico Gambedotti</span>
+  <div>
+    <a href="mailto:federico.gambedotti.23@ucl.ac.uk">Email</a>
     <a href="https://www.linkedin.com/in/federicogambedotti/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    <span class="reach-sep" aria-hidden="true">·</span>
     <a href="https://x.com/FedericoGambed2" target="_blank" rel="noopener noreferrer">X</a>
   </div>
-
-  <script src="script.js"></script>
-  <script src="quotes.js"></script>
+</footer>
+<!-- SITE-FOOTER:END -->
+  <script src="script.js?v=20260809"></script>
 </body>
 </html>

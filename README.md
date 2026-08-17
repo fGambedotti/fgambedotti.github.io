@@ -1,87 +1,61 @@
-# Federico Gambedotti — Personal Website
+# Federico Gambedotti - Personal Website
 
-> "The systems that run our world were designed. They can be redesigned."
+Static personal website for Federico Gambedotti, published through GitHub Pages at [fgambedotti.github.io](https://fgambedotti.github.io).
 
-Personal site for Federico Gambedotti — researcher, writer, builder, and podcast host.
+The site is intentionally framework-free: HTML, CSS, and vanilla JavaScript only.
 
-## Live site
+## Pages
 
-[fgambedotti.github.io](https://fgambedotti.github.io)
+- `index.html`: concise homepage and audience routes
+- `research.html`: PhD focus, research questions, status, and contact
+- `building.html`: Power Haven plus the public live and beta product portfolio
+- `writing.html`: favourite essays and Substack subscription
+- `podcast.html`: latest 2Humans episodes and listening platforms
+- `about.html`: profile, current focus, and intent-based contact options
 
----
-
-## Deploy in 5 minutes
-
-### 1. Create the GitHub repo
-
-Go to [github.com/new](https://github.com/new) and create a repo named exactly:
-
-```
-fgambedotti.github.io
-```
-
-### 2. Clone and push
+## Local preview
 
 ```bash
-git clone https://github.com/fGambedotti/fgambedotti.github.io.git
-cd fgambedotti.github.io
-# Copy the site files into this folder, then:
-git add .
-git commit -m "Launch site"
-git push origin main
+python3 -m http.server 4173
 ```
 
-### 3. Enable GitHub Pages
+Open `http://127.0.0.1:4173/`.
 
-- Go to your repo → **Settings** → **Pages**
-- Source: **Deploy from a branch**
-- Branch: `main` / `root`
-- Click **Save**
+## Routine maintenance
 
-Your site will be live at `https://fgambedotti.github.io` in ~60 seconds.
+Synchronize the shared navigation and footer after editing either partial:
 
----
-
-## Update your podcast RSS feed
-
-Once you have your podcast RSS URL (from Riverside, Transistor, Buzzsprout, etc.), open `script.js` and update line 14:
-
-```js
-podcastFeeds: [
-  'https://api.rss2json.com/v1/api.json?rss_url=YOUR_PODCAST_RSS_URL_HERE&count=3',
-],
+```bash
+node scripts/sync-shared.mjs
 ```
 
----
+Refresh the locally stored YouTube playlist data:
 
-## Update YouTube embed
-
-Once your YouTube channel has a playlist ID, open `index.html` and find the YouTube iframe. Replace the `src` with:
-
-```
-https://www.youtube.com/embed/videoseries?list=YOUR_PLAYLIST_ID&rel=0&modestbranding=1
+```bash
+node scripts/update-podcast-feed.mjs
 ```
 
----
+Check page metadata, duplicate IDs, shared components, and local links:
 
-## File structure
-
-```
-fgambedotti.github.io/
-├── index.html   — full page structure
-├── style.css    — all styling
-├── script.js    — live RSS feeds + interactions
-└── README.md    — this file
+```bash
+node scripts/validate-site.mjs
 ```
 
----
+The `Update podcast feed` GitHub Action runs daily and commits `data/podcast.json` only when the playlist changes. The browser loads this local file first, then uses a network feed and a hardcoded list as fallbacks.
 
-## Adding a custom domain later
+### Building portfolio
 
-1. Buy a domain (e.g. `federicogambedotti.com`)
-2. In GitHub Pages settings, add it under **Custom domain**
-3. Point your domain's DNS to GitHub Pages (instructions provided by GitHub)
+Orbit is the editorial source of truth for the Building page. The browser requests `https://orbit-project-tracker.federicogam.chatgpt.site/api/public-portfolio`, validates the public payload, and renders only approved presentation fields. If that request fails, times out, or is invalid, it loads `data/public-portfolio-fallback.json`; the checked-in Building HTML is a final no-network fallback.
 
----
+After changing which projects are shown from Orbit, export the sanitised portfolio JSON and replace `data/public-portfolio-fallback.json` in the same pull request. Refresh the fallback whenever a product name, status, outcome, verified URL, CTA, or waitlist state changes. Never copy Orbit's internal project response into this repository.
 
-Built with HTML, CSS, and vanilla JS. No frameworks, no build tools. Fast by default.
+## Content principles
+
+- Keep the homepage concise and route visitors to the relevant page.
+- Label early-stage work honestly.
+- Do not claim research outputs, product milestones, or partnerships until they are public.
+- Update the `Now` date on `about.html` when its content changes.
+
+## Deployment
+
+GitHub Pages deploys the repository root from `main`. Pushing to `main` updates the public site after GitHub Pages finishes its build.

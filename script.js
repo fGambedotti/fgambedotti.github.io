@@ -1,64 +1,49 @@
-/* ============================================================
-   Federico Gambedotti — Personal Site
-   script.js
-   ============================================================ */
+/* Federico Gambedotti — shared site interactions */
 
-// ── CONFIG ────────────────────────────────────────────────
-const CONFIG = {
-  substackFeed: 'https://api.rss2json.com/v1/api.json?rss_url=https://fedegam.substack.com/feed',
-  // Replace the URL below with your actual podcast RSS feed when available
-  // e.g. https://feeds.transistor.fm/2humans-podcast
-  podcastFeeds: [
-    'https://api.rss2json.com/v1/api.json?rss_url=https://feeds.transistor.fm/2humans-podcast&count=3',
-    'https://api.rss2json.com/v1/api.json?rss_url=https://anchor.fm/s/2humans/podcast/rss&count=3',
-  ],
+const SITE = {
   substackUrl: 'https://fedegam.substack.com',
-  podcastUrl: 'https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116',
-  spotifyPodcastUrl: 'https://open.spotify.com/search/2Humans%20Podcast',
-  youtubePodcastPlaylistId: 'PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
-  youtubePodcastFeed: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?playlist_id=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
+  youtubePlaylistId: 'PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
+  podcastData: 'data/podcast.json',
+  youtubeFeedProxy: 'https://api.rss2json.com/v1/api.json?rss_url=https://www.youtube.com/feeds/videos.xml?playlist_id=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp',
+  orbitPortfolioUrl: 'https://orbit-project-tracker.federicogam.chatgpt.site/api/public-portfolio',
+  orbitWaitlistUrl: 'https://orbit-project-tracker.federicogam.chatgpt.site/api/public-waitlist',
 };
 
-// Fallback episodes pulled from Apple Podcasts (update as new episodes drop)
-const PODCAST_FALLBACK = [
+const EPISODE_FALLBACK = [
   {
-    title: 'What happens when Academia is overtaken by AI?',
-    date: '13 Apr 2026',
-    duration: '40 min',
-    url: 'https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116?i=1000761056886',
-    ep: 3
+    title: 'We can now re-write DNA - but should we?',
+    pubDate: '2026-07-22T16:05:08+00:00',
+    link: 'https://www.youtube.com/watch?v=k9zVT118tqk',
+    thumbnail: 'https://i.ytimg.com/vi/k9zVT118tqk/hqdefault.jpg',
   },
   {
-    title: 'Are We Overestimating the AI Revolution?',
-    date: '5 Apr 2026',
-    duration: '39 min',
-    url: 'https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116?i=1000759387952',
-    ep: 2
+    title: 'Socialism vs. Capitalism in the Age of AI',
+    pubDate: '2026-07-11T10:02:29+00:00',
+    link: 'https://www.youtube.com/watch?v=nZ54fWnjLBo',
+    thumbnail: 'https://i.ytimg.com/vi/nZ54fWnjLBo/hqdefault.jpg',
   },
   {
-    title: 'The AI War: How Google, OpenAI, and Anthropic Are Shaping the Future',
-    date: '5 Apr 2026',
-    duration: '43 min',
-    url: 'https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116?i=1000759383651',
-    ep: 1
-  }
+    title: 'The UK Social Media Ban: ban the feed or fix the feed',
+    pubDate: '2026-07-02T16:32:18+00:00',
+    link: 'https://www.youtube.com/watch?v=5ZGwRj9pbCE',
+    thumbnail: 'https://i.ytimg.com/vi/5ZGwRj9pbCE/hqdefault.jpg',
+  },
+  {
+    title: 'Real Science That Sounds Like Sci-Fi: Fly Brains and Organoid Computers',
+    pubDate: '2026-05-26T12:59:09+00:00',
+    link: 'https://www.youtube.com/watch?v=xiQ7OVlptos',
+    thumbnail: 'https://i.ytimg.com/vi/xiQ7OVlptos/hqdefault.jpg',
+  },
+  {
+    title: 'The Future of Energy: fossil fuels vs nuclear vs renewable power',
+    pubDate: '2026-05-13T13:30:10+00:00',
+    link: 'https://www.youtube.com/watch?v=6Of0ZA77T_0',
+    thumbnail: 'https://i.ytimg.com/vi/6Of0ZA77T_0/hqdefault.jpg',
+  },
 ];
 
-// ── HELPERS ───────────────────────────────────────────────
-function fmtDate(str) {
-  if (!str) return '';
-  const d = new Date(str);
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-}
-
-function stripHtml(html) {
-  const tmp = document.createElement('div');
-  tmp.innerHTML = html;
-  return tmp.textContent || tmp.innerText || '';
-}
-
-function escapeHtml(str) {
-  return String(str || '')
+function escapeHtml(value) {
+  return String(value || '')
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
@@ -66,623 +51,386 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-function extractFirstImageFromHtml(html) {
-  const match = String(html || '').match(/<img[^>]+src=["']([^"']+)["']/i);
-  return match ? match[1] : '';
+function formatDate(value) {
+  if (!value) return '';
+  return new Date(value).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+  });
 }
 
-function getSubstackItemImage(item) {
-  if (!item) return '';
-  if (item.thumbnail) return item.thumbnail;
-
-  const enclosureLink = item.enclosure && typeof item.enclosure === 'object' ? item.enclosure.link : '';
-  if (enclosureLink) return enclosureLink;
-
-  const fromDescription = extractFirstImageFromHtml(item.description);
-  if (fromDescription) return fromDescription;
-
-  const fromContent = extractFirstImageFromHtml(item.content);
-  if (fromContent) return fromContent;
-
-  return '';
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function normalizeTitle(str) {
-  return String(str || '')
-    .toLowerCase()
-    .replace(/\[.*?\]/g, '')
-    .replace(/[^a-z0-9 ]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function extractYouTubeVideoId(url) {
-  if (!url) return '';
+function getYouTubeId(value) {
+  if (!value) return '';
   try {
-    const parsed = new URL(url);
-    const host = parsed.hostname.replace(/^www\./, '');
-    if (host === 'youtu.be') return parsed.pathname.replace('/', '');
-    if (host === 'youtube.com' || host === 'm.youtube.com') {
-      const idFromQuery = parsed.searchParams.get('v');
-      if (idFromQuery) return idFromQuery;
-      const parts = parsed.pathname.split('/').filter(Boolean);
-      const embedIndex = parts.indexOf('embed');
-      if (embedIndex !== -1 && parts[embedIndex + 1]) return parts[embedIndex + 1];
-    }
-  } catch (e) {
+    const url = new URL(value);
+    if (url.hostname.includes('youtu.be')) return url.pathname.slice(1);
+    return url.searchParams.get('v') || url.pathname.split('/').filter(Boolean).pop() || '';
+  } catch {
     return '';
   }
-  return '';
 }
 
-function podcastQuestionLine(title, description) {
-  const cleanedTitle = String(title || '').replace(/\[.*?\]/g, '').trim();
-  if (cleanedTitle.endsWith('?')) return cleanedTitle;
+function initTheme() {
+  const buttons = document.querySelectorAll('.theme-toggle');
+  const applyTheme = (theme) => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('fg-theme', theme);
+    const isDark = theme === 'dark';
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(isDark));
+      button.setAttribute('aria-label', `Switch to ${isDark ? 'light' : 'dark'} theme`);
+    });
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.content = isDark ? '#173f31' : '#f4efe5';
+  };
 
-  const cleanedDescription = stripHtml(description || '').trim();
-  if (cleanedDescription) {
-    const firstSentence = cleanedDescription.split(/[.?!]/)[0].trim();
-    if (firstSentence.length > 20) return firstSentence;
-  }
-  return `Debate: ${cleanedTitle}`;
-}
-
-function getFallbackEpisodeMeta(title) {
-  const normalized = normalizeTitle(title);
-  return PODCAST_FALLBACK.find((item) => {
-    const fallbackNormalized = normalizeTitle(item.title);
-    return normalized.includes(fallbackNormalized) || fallbackNormalized.includes(normalized);
+  applyTheme(document.documentElement.dataset.theme || 'dark');
+  buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+      applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+    });
   });
 }
 
-// ── SUBSTACK FEED ─────────────────────────────────────────
-async function loadSubstack() {
-  const el = document.getElementById('substack-feed');
-  if (!el) return;
-  try {
-    const res = await fetch(CONFIG.substackFeed);
-    const data = await res.json();
-    if (!data.items || data.items.length === 0) throw new Error('No items');
-
-    const isWritingPage = /(^|\/)writing\.html$/.test(window.location.pathname);
-    const showArticleImages = isWritingPage;
-    const articleLimit = isWritingPage ? 4 : 3;
-
-    el.innerHTML = data.items.slice(0, articleLimit).map((item) => {
-      const imageSrc = getSubstackItemImage(item);
-      const excerpt = `${stripHtml(item.description).slice(0, 140)}…`;
-      const articleClass = showArticleImages ? 'article-item article-item--with-thumb' : 'article-item';
-
-      return `
-      <a class="${articleClass}" href="${item.link}" target="_blank" rel="noopener noreferrer">
-        ${showArticleImages ? `
-        <div class="article-thumb ${imageSrc ? '' : 'article-thumb--placeholder'}">
-          ${imageSrc ? `<img src="${imageSrc}" alt="${escapeHtml(item.title)} cover image" loading="lazy">` : ''}
-        </div>` : ''}
-        <div class="article-main">
-          <div class="article-date">${fmtDate(item.pubDate)}</div>
-          <div class="article-title">${item.title}</div>
-          <div class="article-excerpt">${excerpt}</div>
-        </div>
-      </a>
-    `;
-    }).join('');
-  } catch (e) {
-    el.innerHTML = `<p class="error-msg">Read the latest on <a href="${CONFIG.substackUrl}" target="_blank" rel="noopener noreferrer">Substack →</a></p>`;
-  }
-}
-
-// ── PODCAST FEED ──────────────────────────────────────────
-async function loadPodcast() {
-  const el = document.getElementById('podcast-feed');
-  if (!el) return;
-
-  for (const url of CONFIG.podcastFeeds) {
-    try {
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.items && data.items.length > 0) {
-        el.innerHTML = data.items.slice(0, 3).map((item, i) => `
-          <a class="podcast-item" href="${item.link || CONFIG.podcastUrl}" target="_blank" rel="noopener">
-            <div class="play-btn"><div class="play-tri"></div></div>
-            <div class="pod-meta">
-              <div class="pod-ep">Ep ${data.items.length - i}</div>
-              <div class="pod-title">${item.title}</div>
-              <div class="pod-dur">${fmtDate(item.pubDate)}</div>
-            </div>
-          </a>
-        `).join('');
-        return;
-      }
-    } catch (e) {
-      // try next URL
-    }
-  }
-
-  // Fallback to hardcoded episodes
-  el.innerHTML = PODCAST_FALLBACK.map(item => `
-    <a class="podcast-item" href="${item.url}" target="_blank" rel="noopener">
-      <div class="play-btn"><div class="play-tri"></div></div>
-      <div class="pod-meta">
-        <div class="pod-ep">Ep ${item.ep}</div>
-        <div class="pod-title">${item.title}</div>
-        <div class="pod-dur">${item.date} · ${item.duration}</div>
-      </div>
-    </a>
-  `).join('');
-}
-
-// ── YOUTUBE PODCAST (LATEST VIDEO) ───────────────────────
-async function loadLatestYouTubePodcastVideo() {
-  const frame = document.getElementById('yt-latest-video');
-  if (!frame) return;
-
-  try {
-    const res = await fetch(CONFIG.youtubePodcastFeed);
-    const data = await res.json();
-    const latestItem = data?.items?.[0];
-    const latestId = extractYouTubeVideoId(latestItem?.link || latestItem?.guid || '');
-
-    if (!latestId) throw new Error('No latest playlist video found');
-    frame.src = `https://www.youtube.com/embed/${latestId}?rel=0&modestbranding=1`;
-  } catch (e) {
-    // Keep static iframe src fallback from HTML when feed fetch fails.
-  }
-}
-
-// ── PODCAST CARDS (THUMBNAILS + PLATFORM LINKS) ──────────
-async function loadPodcastCards() {
-  const el = document.getElementById('episode-cards');
-  if (!el) return;
-
-  try {
-    const res = await fetch(CONFIG.youtubePodcastFeed);
-    const data = await res.json();
-    if (!data.items || data.items.length === 0) throw new Error('No episodes');
-
-    el.innerHTML = data.items.slice(0, 3).map((item, idx) => {
-      const videoId = extractYouTubeVideoId(item.link || item.guid || '');
-      const fallbackMeta = getFallbackEpisodeMeta(item.title);
-      const episodeLabel = fallbackMeta?.ep ? `Episode ${fallbackMeta.ep}` : `Latest ${idx + 1}`;
-      const duration = fallbackMeta?.duration || 'Duration on platform';
-      const appleLink = fallbackMeta?.url || CONFIG.podcastUrl;
-      const spotifyLink = CONFIG.spotifyPodcastUrl;
-      const youtubeLink = item.link || `https://www.youtube.com/watch?v=${videoId}`;
-      const thumbnail = item.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '');
-      const question = podcastQuestionLine(item.title, item.description).slice(0, 140);
-
-      return `
-        <article class="episode-card">
-          <a href="${youtubeLink}" target="_blank" rel="noopener noreferrer">
-            <div class="episode-thumb">${thumbnail ? `<img src="${thumbnail}" alt="${escapeHtml(item.title)} thumbnail">` : ''}</div>
-          </a>
-          <div class="episode-card-body">
-            <div class="episode-topline">
-              <span class="episode-num">${escapeHtml(episodeLabel)}</span>
-              <span class="episode-date">${escapeHtml(fmtDate(item.pubDate))}</span>
-            </div>
-            <h3 class="episode-card-title">${escapeHtml(item.title)}</h3>
-            <p class="episode-question">${escapeHtml(question)}</p>
-            <p class="episode-duration">${escapeHtml(duration)}</p>
-            <div class="episode-platforms">
-              <a href="${appleLink}" target="_blank" rel="noopener noreferrer">Apple</a>
-              <a href="${spotifyLink}" target="_blank" rel="noopener noreferrer">Spotify</a>
-              <a href="${youtubeLink}" target="_blank" rel="noopener noreferrer">YouTube</a>
-            </div>
-          </div>
-        </article>
-      `;
-    }).join('');
-  } catch (e) {
-    el.innerHTML = PODCAST_FALLBACK.slice(0, 3).map((item) => `
-      <article class="episode-card">
-        <div class="episode-thumb"></div>
-        <div class="episode-card-body">
-          <div class="episode-topline">
-            <span class="episode-num">Episode ${item.ep}</span>
-            <span class="episode-date">${item.date}</span>
-          </div>
-          <h3 class="episode-card-title">${escapeHtml(item.title)}</h3>
-          <p class="episode-question">${escapeHtml(podcastQuestionLine(item.title, ''))}</p>
-          <p class="episode-duration">${escapeHtml(item.duration)}</p>
-          <div class="episode-platforms">
-            <a href="${item.url}" target="_blank" rel="noopener noreferrer">Apple</a>
-            <a href="${CONFIG.spotifyPodcastUrl}" target="_blank" rel="noopener noreferrer">Spotify</a>
-            <a href="https://www.youtube.com/playlist?list=${CONFIG.youtubePodcastPlaylistId}" target="_blank" rel="noopener noreferrer">YouTube</a>
-          </div>
-        </div>
-      </article>
-    `).join('');
-  }
-}
-
-// ── SCROLL REVEAL ──────────────────────────────────────────
-function initScrollReveal() {
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return;
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-  );
-
-  document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .stagger-children').forEach((el) => {
-    observer.observe(el);
-  });
-}
-
-// ── ACTIVE NAV LINK ───────────────────────────────────────
-function initActiveNav() {
-  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach((link) => {
-    const linkPage = link.getAttribute('href');
-    if (linkPage === currentPage) {
-      link.classList.add('active');
-    }
-  });
-}
-
-// ── SUBSCRIBE BUTTON ──────────────────────────────────────
-function initSubscribe() {
-  const form = document.getElementById('sub-form');
-  const btn = document.getElementById('sub-btn');
-  const input = document.getElementById('sub-email');
-  const feedback = document.getElementById('sub-feedback');
-  if (!form || !btn || !input || !feedback) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = input.value.trim();
-
-    if (!isValidEmail(email)) {
-      input.setAttribute('aria-invalid', 'true');
-      feedback.textContent = 'Enter a valid email address.';
-      feedback.dataset.state = 'error';
-      input.focus();
-      return;
-    }
-
-    input.removeAttribute('aria-invalid');
-    feedback.textContent = 'Opening Substack sign-up...';
-    feedback.dataset.state = 'success';
-    window.open(`${CONFIG.substackUrl}/subscribe?email=${encodeURIComponent(email)}`, '_blank', 'noopener,noreferrer');
-    input.value = '';
-    btn.textContent = 'Done ✓';
-    btn.style.background = 'var(--accent)';
-    setTimeout(() => {
-      btn.textContent = 'Subscribe →';
-      btn.style.background = '';
-      feedback.textContent = '';
-      delete feedback.dataset.state;
-    }, 3000);
-  });
-
-  input.addEventListener('input', () => {
-    if (isValidEmail(input.value.trim())) {
-      input.removeAttribute('aria-invalid');
-      if (feedback.dataset.state === 'error') {
-        feedback.textContent = '';
-        delete feedback.dataset.state;
-      }
-    }
-  });
-}
-
-// ── CONTACT EMAIL ────────────────────────────────────────
-function initContactEmailLink() {
-  const link = document.getElementById('contact-email-link');
-  if (!link) return;
-
-  const { user, domain } = link.dataset;
-  if (!user || !domain) {
-    link.removeAttribute('href');
-    return;
-  }
-
-  const email = `${user}@${domain}`;
-  link.href = `mailto:${email}?subject=Website%20enquiry`;
-  link.setAttribute('aria-label', `Email ${email}`);
-}
-
-// ── MOBILE NAV ────────────────────────────────────────────
 function initMobileNav() {
-  const nav = document.querySelector('nav');
   const toggle = document.querySelector('.nav-toggle');
-  const links = document.getElementById('nav-links');
-  if (!nav || !toggle || !links) return;
+  const links = document.querySelector('.nav-links');
+  if (!toggle || !links) return;
 
-  const closeMenu = () => {
+  const close = () => {
     links.classList.remove('open');
     toggle.setAttribute('aria-expanded', 'false');
   };
 
   toggle.addEventListener('click', () => {
-    const isOpen = links.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(isOpen));
+    const open = links.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
   });
-
-  // Close nav when a link is clicked
-  links.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', closeMenu);
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!nav.contains(e.target)) closeMenu();
-  });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
+  links.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
   });
 }
 
-// ── HERO WORD ANIMATION ───────────────────────────────────
-function initHeroWordAnimation() {
-  const pastWord = document.querySelector('.hero-word-past');
-  const futureWord = document.querySelector('.hero-word-future');
-  if (!pastWord || !futureWord) return;
+function initScrollReveal() {
+  const targets = document.querySelectorAll('.reveal, .stagger-children');
+  if (!targets.length) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    targets.forEach((target) => target.classList.add('is-visible'));
+    return;
+  }
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return;
-
-  const speedMultiplier = 1.5; // 50% faster
-  const typeStep = 0.34 / speedMultiplier;
-  const letterDuration = 1.36 / speedMultiplier;
-  const startDelay = 0.2 / speedMultiplier;
-  const gapBetweenWords = 1.36 / speedMultiplier;
-
-  const prepareWord = (wordEl, delayStart) => {
-    const text = wordEl.textContent.trim();
-    const chars = Array.from(text);
-    wordEl.textContent = '';
-
-    chars.forEach((char, index) => {
-      const letter = document.createElement('span');
-      letter.className = 'hero-letter';
-      letter.textContent = char === ' ' ? '\u00A0' : char;
-      letter.style.setProperty('--letter-delay', `${delayStart + index * typeStep}s`);
-      wordEl.appendChild(letter);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-visible');
+      observer.unobserve(entry.target);
     });
+  }, { threshold: 0.12, rootMargin: '0px 0px -35px' });
 
-    wordEl.classList.add('is-typing');
-    return chars.length;
+  targets.forEach((target) => observer.observe(target));
+}
+
+function initSubscribe() {
+  document.querySelectorAll('.subscribe-form').forEach((form) => {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = form.querySelector('input[type="email"]');
+      const message = form.querySelector('.sub-message');
+      const email = input?.value.trim() || '';
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (message) message.textContent = 'Please enter a valid email address.';
+        input?.focus();
+        return;
+      }
+      window.open(`${SITE.substackUrl}/subscribe?email=${encodeURIComponent(email)}`, '_blank', 'noopener');
+      if (message) message.textContent = 'Substack opened in a new tab to confirm your subscription.';
+    });
+  });
+}
+
+const CONTACT_TOPICS = {
+  research: {
+    label: 'Research collaboration',
+    title: 'Compare notes on a shared question.',
+    copy: 'If you work on community energy, energy equity, flexibility, or demand reduction, I would be glad to hear what you are exploring.',
+    subject: 'Research collaboration',
+    action: 'Email about research',
+  },
+  venture: {
+    label: 'Power Haven or investment',
+    title: 'Explore whether we should build together.',
+    copy: 'I am speaking with energy operators, investors, technical collaborators, and potential partners interested in Power Haven.',
+    subject: 'Power Haven conversation',
+    action: 'Email about Power Haven',
+  },
+  podcast: {
+    label: 'Podcast or speaking',
+    title: 'Bring a difficult question to the table.',
+    copy: 'For podcast ideas, guest suggestions, panels, or speaking invitations, send the topic, audience, and intended format.',
+    subject: 'Podcast or speaking invitation',
+    action: 'Send an invitation',
+  },
+  introduction: {
+    label: 'General introduction',
+    title: 'Start with a short conversation.',
+    copy: 'If none of the other routes quite fits, tell me what you are working on and why you think we should know one another.',
+    subject: 'Introduction',
+    action: 'Introduce yourself',
+  },
+};
+
+function initContactChooser() {
+  const chooser = document.querySelector('.contact-chooser');
+  if (!chooser) return;
+  const options = [...chooser.querySelectorAll('[data-contact-topic]')];
+  const detail = chooser.querySelector('.contact-detail');
+  if (!options.length || !detail) return;
+
+  const render = (topic) => {
+    const content = CONTACT_TOPICS[topic];
+    if (!content) return;
+    options.forEach((option) => {
+      const selected = option.dataset.contactTopic === topic;
+      option.classList.toggle('active', selected);
+      option.setAttribute('aria-selected', String(selected));
+      option.setAttribute('tabindex', selected ? '0' : '-1');
+    });
+    const selectedOption = options.find((option) => option.dataset.contactTopic === topic);
+    if (selectedOption?.id) detail.setAttribute('aria-labelledby', selectedOption.id);
+    const subject = encodeURIComponent(content.subject);
+    detail.innerHTML = `
+      <span class="contact-detail-label">${content.label}</span>
+      <h3>${content.title}</h3>
+      <p>${content.copy}</p>
+      <div class="contact-actions">
+        <a class="primary-link" href="mailto:federico.gambedotti.23@ucl.ac.uk?subject=${subject}">${content.action} <i class="ph ph-envelope-simple" aria-hidden="true"></i></a>
+        <a class="secondary-link" href="https://calendly.com/ucbvfg0-ucl/30min" target="_blank" rel="noopener noreferrer">Schedule a 20 min call <i class="ph ph-calendar-check" aria-hidden="true"></i></a>
+      </div>`;
   };
 
-  requestAnimationFrame(() => {
-    const pastCount = prepareWord(pastWord, startDelay);
-    const pastDuration = (Math.max(0, pastCount - 1) * typeStep) + letterDuration;
-    const futureStart = startDelay + pastDuration + gapBetweenWords;
-    prepareWord(futureWord, futureStart);
+  options.forEach((option, index) => {
+    option.addEventListener('click', () => render(option.dataset.contactTopic));
+    option.addEventListener('keydown', (event) => {
+      if (!['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key)) return;
+      event.preventDefault();
+      const direction = ['ArrowRight', 'ArrowDown'].includes(event.key) ? 1 : -1;
+      const next = event.key === 'Home'
+        ? options[0]
+        : event.key === 'End'
+          ? options[options.length - 1]
+          : options[(index + direction + options.length) % options.length];
+      next.focus();
+      render(next.dataset.contactTopic);
+    });
   });
 }
 
-// ── HERO WORD HOVER FLIP ──────────────────────────────────
-function initHeroHoverFlip() {
-  const words = document.querySelectorAll('.hero-word-past, .hero-word-future');
-  if (!words.length) return;
+function episodeCard(item) {
+  const videoId = getYouTubeId(item.link || item.guid);
+  const link = item.link || item.url || `https://www.youtube.com/playlist?list=${SITE.youtubePlaylistId}`;
+  const image = item.thumbnail || (videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : '');
+  const title = escapeHtml(item.title);
+  const date = escapeHtml(item.date || formatDate(item.pubDate));
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReducedMotion) return;
+  return `
+    <a class="episode-card" href="${escapeHtml(link)}" target="_blank" rel="noopener noreferrer">
+      <div class="episode-thumb">
+        ${image ? `<img src="${escapeHtml(image)}" alt="" loading="lazy">` : ''}
+        <span class="episode-play"><i class="ph ph-play" aria-hidden="true"></i></span>
+      </div>
+      <div class="episode-copy">
+        <h3 class="episode-title">${title}</h3>
+        <span class="episode-date">${date}</span>
+      </div>
+    </a>
+  `;
+}
 
-  words.forEach((word) => {
-    word.addEventListener('mouseenter', () => {
-      word.classList.remove('is-flip');
-      // Force reflow so rapid re-hover retriggers the animation.
-      void word.offsetWidth;
-      word.classList.add('is-flip');
-    });
+async function loadPodcastCards() {
+  const container = document.getElementById('podcast-cards');
+  if (!container) return;
+  const limit = Number(container.dataset.limit || 5);
 
-    word.addEventListener('animationend', (event) => {
-      if (event.animationName === 'heroWordFlip') {
-        word.classList.remove('is-flip');
+  const loadItems = async (url) => {
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error('Podcast feed unavailable');
+    const data = await response.json();
+    if (!Array.isArray(data.items) || !data.items.length) throw new Error('No episodes');
+    return data.items;
+  };
+
+  try {
+    const items = await loadItems(SITE.podcastData);
+    container.innerHTML = items.slice(0, limit).map(episodeCard).join('');
+    return;
+  } catch {
+    // File previews cannot always fetch local JSON, so retain a network fallback.
+  }
+
+  try {
+    const items = await loadItems(SITE.youtubeFeedProxy);
+    container.innerHTML = items.slice(0, limit).map(episodeCard).join('');
+  } catch {
+    container.innerHTML = EPISODE_FALLBACK.slice(0, limit).map(episodeCard).join('');
+  }
+}
+
+const PORTFOLIO_STATUSES = ['live', 'beta', 'exploring'];
+
+function safeHttpUrl(value) {
+  if (!value) return '';
+  try {
+    const url = new URL(value);
+    return ['http:', 'https:'].includes(url.protocol) ? url.toString() : '';
+  } catch {
+    return '';
+  }
+}
+
+function validPortfolioPayload(payload) {
+  if (!payload || payload.version !== 1 || !Array.isArray(payload.projects)) return null;
+  const seen = new Set();
+  const projects = [];
+  for (const item of payload.projects) {
+    if (!item || typeof item !== 'object') return null;
+    const slug = typeof item.slug === 'string' ? item.slug.trim() : '';
+    const name = typeof item.name === 'string' ? item.name.trim() : '';
+    const description = typeof item.description === 'string' ? item.description.trim() : '';
+    const status = item.status;
+    const order = Number(item.order);
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug) || seen.has(slug) || !name || !description || !PORTFOLIO_STATUSES.includes(status) || !Number.isFinite(order) || typeof item.waitlistEnabled !== 'boolean') return null;
+    const productUrl = item.productUrl ? safeHttpUrl(item.productUrl) : '';
+    if (item.productUrl && !productUrl) return null;
+    let cta = null;
+    if (item.cta != null) {
+      if (!item.cta || typeof item.cta.label !== 'string' || !item.cta.label.trim() || !safeHttpUrl(item.cta.url)) return null;
+      cta = { label: item.cta.label.trim(), url: safeHttpUrl(item.cta.url) };
+    }
+    seen.add(slug);
+    projects.push({ slug, name, description, status, order, waitlistEnabled: item.waitlistEnabled, productUrl, cta });
+  }
+  return projects;
+}
+
+function waitlistForm(project) {
+  const id = `waitlist-${project.slug}`;
+  return `
+    <form class="waitlist-form" data-product-slug="${escapeHtml(project.slug)}" novalidate>
+      <label for="${id}">Email address</label>
+      <div class="waitlist-fields">
+        <input id="${id}" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+        <input class="waitlist-honeypot" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button type="submit" disabled>Join waitlist</button>
+      </div>
+      <p class="waitlist-message" role="status" aria-live="polite"></p>
+    </form>`;
+}
+
+function portfolioCard(project) {
+  const action = project.status === 'beta' && project.waitlistEnabled
+    ? waitlistForm(project)
+    : project.cta
+      ? `<a class="product-action" href="${escapeHtml(project.cta.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.cta.label)} <i class="ph ph-arrow-up-right" aria-hidden="true"></i></a>`
+      : '';
+  return `<article class="product-card"><div><span class="product-status ${project.status}">${escapeHtml(project.status)}</span><h4>${escapeHtml(project.name)}</h4><p>${escapeHtml(project.description)}</p></div>${action}</article>`;
+}
+
+function renderPortfolio(container, projects) {
+  const groupCopy = {
+    live: ['Live', 'Available now'],
+    beta: ['Beta', 'Join the first testers'],
+    exploring: ['Exploring', 'Early ideas'],
+  };
+  container.innerHTML = PORTFOLIO_STATUSES.map((status) => {
+    const items = projects.filter((project) => project.status === status).sort((a, b) => a.order - b.order || a.name.localeCompare(b.name));
+    if (!items.length) return '';
+    const headingId = `products-${status}`;
+    return `<section class="product-status-group" aria-labelledby="${headingId}"><div class="product-status-heading"><h3 id="${headingId}">${groupCopy[status][0]}</h3><span>${groupCopy[status][1]}</span></div><div class="product-list">${items.map(portfolioCard).join('')}</div></section>`;
+  }).join('');
+  initWaitlistForms(container);
+}
+
+async function fetchJsonWithTimeout(url, timeoutMs = 3500) {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { cache: 'no-store', signal: controller.signal });
+    if (!response.ok) throw new Error('Request failed');
+    return await response.json();
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
+async function loadPublicPortfolio() {
+  const container = document.getElementById('product-portfolio');
+  if (!container) return;
+  const endpoint = container.dataset.endpoint || SITE.orbitPortfolioUrl;
+  const fallback = container.dataset.fallback || 'data/public-portfolio-fallback.json';
+  for (const source of [endpoint, fallback]) {
+    try {
+      const projects = validPortfolioPayload(await fetchJsonWithTimeout(source));
+      if (!projects || !projects.length) continue;
+      renderPortfolio(container, projects);
+      return;
+    } catch {
+      // The checked-in HTML remains the final no-network fallback.
+    }
+  }
+  initWaitlistForms(container);
+}
+
+function initWaitlistForms(root = document) {
+  root.querySelectorAll('.waitlist-form:not([data-ready])').forEach((form) => {
+    form.dataset.ready = 'true';
+    const email = form.querySelector('input[name="email"]');
+    const company = form.querySelector('input[name="company"]');
+    const button = form.querySelector('button[type="submit"]');
+    const message = form.querySelector('.waitlist-message');
+    const update = () => { button.disabled = !email.validity.valid || !email.value.trim(); };
+    email.addEventListener('input', update);
+    update();
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!email.validity.valid || !email.value.trim()) {
+        message.textContent = 'Please enter a valid email address.';
+        email.focus();
+        return;
+      }
+      button.disabled = true;
+      button.textContent = 'Joining…';
+      message.className = 'waitlist-message';
+      message.textContent = '';
+      try {
+        const response = await fetch(SITE.orbitWaitlistUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productSlug: form.dataset.productSlug, email: email.value, referralSource: 'building-page', company: company.value }),
+        });
+        const data = await response.json().catch(() => ({}));
+        if (!response.ok || !data.ok) throw new Error('Waitlist unavailable');
+        message.classList.add('success');
+        message.textContent = data.message || "You're on the waitlist.";
+        email.disabled = true;
+        button.textContent = 'Joined';
+      } catch {
+        message.classList.add('error');
+        message.textContent = 'The waitlist is temporarily unavailable. Please try again later.';
+        button.textContent = 'Join waitlist';
+        update();
       }
     });
   });
 }
 
-// ── HERO KEYWORD ROTATOR ──────────────────────────────────
-const HERO_KEYWORDS = [
-  'Energy equity',
-  'Energy transition',
-  'Fairness',
-  'AI revolution',
-  'Flexibility markets',
-  'Energy inclusion',
-  'Institutions',
-  'Policy design',
-  'Community energy',
-  'Research',
-  'Writing',
-  'Podcast'
-];
-
-function initHeroKeywordCloud() {
-  const cloud = document.getElementById('hero-keyword-cloud');
-  const currentEl = document.getElementById('hero-keyword-current');
-  if (!cloud || !currentEl) return;
-
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!HERO_KEYWORDS.length) return;
-
-  const speedMultiplier = 1.5; // 50% faster
-  let currentIndex = Math.floor(Math.random() * HERO_KEYWORDS.length);
-  let lastAdvanceAt = 0;
-
-  const syncKeywordState = (nextIndex, animate) => {
-    const keyword = HERO_KEYWORDS[nextIndex];
-    currentEl.textContent = keyword;
-
-    if (animate && !prefersReducedMotion) {
-      currentEl.classList.remove('is-swapping');
-      void currentEl.offsetWidth;
-      currentEl.classList.add('is-swapping');
-    }
-  };
-
-  const getNextIndex = () => {
-    if (HERO_KEYWORDS.length === 1) return 0;
-    let next = currentIndex;
-    while (next === currentIndex) {
-      next = Math.floor(Math.random() * HERO_KEYWORDS.length);
-    }
-    return next;
-  };
-
-  const advanceKeyword = () => {
-    const now = performance.now();
-    if (now - lastAdvanceAt < 350 / speedMultiplier) return;
-    lastAdvanceAt = now;
-    currentIndex = getNextIndex();
-    syncKeywordState(currentIndex, true);
-  };
-
-  syncKeywordState(currentIndex, false);
-
-  const intervalId = window.setInterval(advanceKeyword, 5000 / speedMultiplier);
-  cloud.addEventListener('mouseenter', advanceKeyword);
-
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) return;
-    // Refresh once when returning to tab.
-    advanceKeyword();
-  });
-
-  window.addEventListener('beforeunload', () => {
-    window.clearInterval(intervalId);
-  });
-}
-
-// ── INIT ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  loadSubstack();
-  loadPodcast();
-  loadPodcastCards();
-  loadLatestYouTubePodcastVideo();
+  initTheme();
+  initMobileNav();
   initScrollReveal();
   initSubscribe();
-  initContactEmailLink();
-  initActiveNav();
-  initMobileNav();
-  initHeroWordAnimation();
-  initHeroHoverFlip();
-  initHeroKeywordCloud();
+  initContactChooser();
+  loadPodcastCards();
+  loadPublicPortfolio();
 });
-
-// ── VOTE SYSTEM ───────────────────────────────────────────
-// Uses localStorage for persistence (GitHub Pages = static host only).
-// Starting counts are hardcoded offsets added to the localStorage count.
-
-const VOTE_STARTING_COUNTS = {
-  lifedash: 47,
-  zava: 38,
-  worthit: 29,
-  powerbriscola: 31,
-};
-const VOTE_PROGRESS_TARGET = 1000;
-
-function getVoteCount(slug, startCount) {
-  const stored = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
-  const safeStored = Number.isFinite(stored) ? stored : 0;
-  return startCount + safeStored;
-}
-
-function hasVoted(slug) {
-  return localStorage.getItem('voted_' + slug) === 'true';
-}
-
-function castVote(slug) {
-  const current = parseInt(localStorage.getItem('votes_' + slug) || '0', 10);
-  const safeCurrent = Number.isFinite(current) ? current : 0;
-  localStorage.setItem('votes_' + slug, String(safeCurrent + 1));
-  localStorage.setItem('voted_' + slug, 'true');
-}
-
-function getStartCount(slug, datasetStart) {
-  if (Number.isFinite(datasetStart)) return datasetStart;
-  return VOTE_STARTING_COUNTS[slug] || 0;
-}
-
-function updateVoteDisplay(countLabel, barFill, pctLabel, count) {
-  const pct = Math.min(100, Math.round((count / VOTE_PROGRESS_TARGET) * 100));
-  countLabel.textContent = count.toLocaleString() + ' votes toward ' + VOTE_PROGRESS_TARGET.toLocaleString();
-  barFill.style.width = pct + '%';
-  pctLabel.textContent = pct + '% of the way there';
-}
-
-function renderVoteBlock(card) {
-  const slug = card.dataset.slug;
-  const start = getStartCount(slug, parseInt(card.dataset.start, 10));
-  const commitment = card.dataset.commitment;
-
-  const countLabel = card.querySelector('.vote-count-label');
-  const barFill = card.querySelector('.vote-bar-fill');
-  const pctLabel = card.querySelector('.vote-pct-label');
-  const commitmentEl = card.querySelector('.vote-commitment');
-  const formArea = card.querySelector('.vote-form-area');
-  const emailInput = card.querySelector('.vote-email');
-  const voteBtn = card.querySelector('.vote-btn');
-  const errorEl = card.querySelector('.vote-error');
-
-  const count = getVoteCount(slug, start);
-  updateVoteDisplay(countLabel, barFill, pctLabel, count);
-  commitmentEl.textContent = commitment;
-
-  if (hasVoted(slug)) {
-    formArea.innerHTML = '<p class=\"vote-confirmed\">You have already voted for this — thanks! We will be in touch.</p>';
-    return;
-  }
-
-  function syncVoteButtonState() {
-    const hasAnyEmailInput = emailInput.value.trim().length > 0;
-    voteBtn.disabled = !hasAnyEmailInput;
-  }
-
-  syncVoteButtonState();
-
-  voteBtn.addEventListener('click', () => {
-    if (voteBtn.disabled) return;
-    const email = emailInput.value.trim();
-    if (!isValidEmail(email)) {
-      errorEl.textContent = 'Please enter a valid email address.';
-      emailInput.focus();
-      return;
-    }
-    errorEl.textContent = '';
-    castVote(slug);
-
-    const newCount = getVoteCount(slug, start);
-    updateVoteDisplay(countLabel, barFill, pctLabel, newCount);
-
-    const projectName = card.querySelector('.experiment-name').textContent;
-    formArea.innerHTML = '<p class=\"vote-confirmed\">Vote counted — thank you. I will email you when ' + projectName + ' launches.</p>';
-  });
-
-  emailInput.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') voteBtn.click();
-  });
-
-  emailInput.addEventListener('input', () => {
-    if (errorEl.textContent) errorEl.textContent = '';
-    syncVoteButtonState();
-  });
-}
-
-function initVoteSystem() {
-  const cards = document.querySelectorAll('.experiment-card');
-  cards.forEach(renderVoteBlock);
-}
-
-// Only initialise on the building page
-if (document.querySelector('.experiment-card')) {
-  document.addEventListener('DOMContentLoaded', initVoteSystem);
-}

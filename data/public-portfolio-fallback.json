@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-17T00:00:00.000Z",
+  "projects": [
+    {
+      "slug": "energy-pulse",
+      "name": "Energy Pulse",
+      "description": "A focused 72-hour UK energy feed with smart prioritisation and clear AI summaries.",
+      "status": "live",
+      "productUrl": "https://energy-news-hub.vercel.app/",
+      "cta": { "label": "Try it", "url": "https://energy-news-hub.vercel.app/" },
+      "waitlistEnabled": false,
+      "order": 10
+    },
+    {
+      "slug": "dayflow",
+      "name": "DayFlow",
+      "description": "Answer three questions and get a clear, time-blocked day plan in under 60 seconds.",
+      "status": "live",
+      "waitlistEnabled": false,
+      "order": 20
+    },
+    {
+      "slug": "quiet-concierge",
+      "name": "Quiet Concierge",
+      "description": "Estimate a ScotRail Delay Repay claim without sharing booking details or connecting an inbox.",
+      "status": "beta",
+      "productUrl": "https://quiet-concierge-alpha.federicogam.chatgpt.site/",
+      "waitlistEnabled": true,
+      "order": 10
+    },
+    {
+      "slug": "signal-ledger",
+      "name": "Signal Ledger",
+      "description": "A focused crypto news feed for Bitcoin, Ethereum, and Solana using live market data and curated sources.",
+      "status": "beta",
+      "waitlistEnabled": true,
+      "order": 20
+    }
+  ]
+}

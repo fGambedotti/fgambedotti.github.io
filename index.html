@@ -1,241 +1,144 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Federico Gambedotti — Researcher, writer, builder, and podcast host working at the intersection of energy, systems, and fairness.">
-  <meta name="theme-color" content="#f7f5f0">
-  <link rel="canonical" href="https://fgambedotti.github.io/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Federico Gambedotti — Researcher, builder, writer, host</title>
+  <meta name="description" content="Federico Gambedotti works across energy research, startup building, writing, and the 2Humans podcast.">
+  <meta name="theme-color" content="#173f31">
   <meta property="og:title" content="Federico Gambedotti">
-  <meta property="og:description" content="All systems that run our world were designed by someone. AI gives us the power to redesign them for everyone.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://fgambedotti.github.io">
-  <meta property="og:site_name" content="Federico Gambedotti">
-  <meta property="og:locale" content="en_GB">
+  <meta property="og:description" content="Researching, building, writing, and talking about systems worth redesigning.">
   <meta property="og:image" content="https://fgambedotti.github.io/assets/social-preview.png">
-  <meta property="og:image:secure_url" content="https://fgambedotti.github.io/assets/social-preview.png">
-  <meta property="og:image:type" content="image/png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Federico Gambedotti website preview">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://fgambedotti.github.io/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Federico Gambedotti">
-  <meta name="twitter:description" content="All systems that run our world were designed by someone. AI gives us the power to redesign them for everyone.">
+  <meta name="twitter:description" content="Researching, building, writing, and talking about systems worth redesigning.">
   <meta name="twitter:image" content="https://fgambedotti.github.io/assets/social-preview.png">
-  <title>Federico Gambedotti</title>
+  <link rel="canonical" href="https://fgambedotti.github.io/">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="alternate" type="application/rss+xml" title="Federico Gambedotti on Substack" href="https://fedegam.substack.com/feed">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;1,400&family=Sacramento&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <script>
+    (() => {
+      const saved = localStorage.getItem('fg-theme');
+      document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    })();
+  </script>
+  <link rel="stylesheet" href="style.css?v=20260809">
   <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Federico Gambedotti",
-      "url": "https://fgambedotti.github.io/",
-      "jobTitle": "Researcher, Writer, Builder, Podcast Host",
-      "affiliation": {
-        "@type": "Organization",
-        "name": "UCL"
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://fgambedotti.github.io/#federico",
+        "name": "Federico Gambedotti",
+        "url": "https://fgambedotti.github.io/",
+        "image": "https://fgambedotti.github.io/assets/portraits/federico-bio-bust.jpg",
+        "jobTitle": "PhD researcher, builder, writer and podcast host",
+        "affiliation": {
+          "@type": "CollegeOrUniversity",
+          "name": "University College London"
+        },
+        "knowsAbout": [
+          "Energy equity",
+          "Energy flexibility",
+          "Community energy",
+          "Demand reduction",
+          "Artificial intelligence",
+          "Institutional design"
+        ],
+        "sameAs": [
+          "https://www.linkedin.com/in/federicogambedotti/",
+          "https://x.com/FedericoGambed2",
+          "https://fedegam.substack.com/",
+          "https://www.youtube.com/@2HumansPodcast"
+        ]
       },
-      "sameAs": [
-        "https://fedegam.substack.com",
-        "https://www.youtube.com/@2HumansPodcast",
-        "https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116"
-      ]
-    }
+      {
+        "@type": "WebSite",
+        "@id": "https://fgambedotti.github.io/#website",
+        "url": "https://fgambedotti.github.io/",
+        "name": "Federico Gambedotti",
+        "inLanguage": "en-GB",
+        "author": { "@id": "https://fgambedotti.github.io/#federico" }
+      }
+    ]
+  }
   </script>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to main content</a>
+<body class="home-page">
+  <a class="skip-link" href="#main-content">Skip to content</a>
 
-  <!-- NAV -->
-  <nav aria-label="Primary">
-    <a class="nav-name" href="index.html">Federico Gambedotti</a>
-    <button class="nav-toggle" type="button" aria-label="Toggle menu" aria-controls="nav-links" aria-expanded="false">&#9776;</button>
-    <ul class="nav-links" id="nav-links">
-      <li><a href="research.html">Research</a></li>
-      <li><a href="writing.html">Writing</a></li>
-      <li><a href="building.html">Building</a></li>
-      <li><a href="podcast.html">Podcast</a></li>
-      <li><a href="about.html">About</a></li>
-    </ul>
-  </nav>
-
-  <main id="main-content">
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-left">
-      <div class="hero-eyebrow">Researcher · Writer · Builder · Host</div>
-      <h1 class="hero-headline">
-        All systems that run our world were <span class="hero-word-past">designed</span> by someone.<br>
-        AI gives us the power to <span class="hero-word-future">redesign</span> them for everyone.
-      </h1>
-      <div class="hero-bottom">
-        <div class="hero-rule"></div>
-        <p class="hero-sub">The AI revolution is happening. The question is who it is designed for and who gets left out.</p>
-        <div class="hero-keyword-cloud" id="hero-keyword-cloud">
-          <span class="hero-keyword-current" id="hero-keyword-current" aria-live="polite">Energy equity</span>
-        </div>
-        <a href="#feed" class="hero-cta" title="Jump to Latest from the work">Explore latest work ↓</a>
+  <main class="home-shell" id="main-content">
+    <header class="home-top">
+      <div>
+        <a class="home-name" href="index.html">Federico Gambedotti</a>
+        <p class="home-role">PhD researcher · builder · writer · host</p>
       </div>
-    </div>
-  </section>
+      <div class="home-top-actions">
+        <a class="home-about-link" href="about.html">About</a>
+        <button class="theme-toggle" type="button" aria-label="Switch colour theme" aria-pressed="false">
+          <i class="ph ph-sun" aria-hidden="true"></i>
+          <i class="ph ph-moon" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
 
-  <!-- ABOUT -->
-  <section class="about-strip reveal" id="about">
-    <div class="about-right">
-      <figure class="about-portrait">
-        <img src="assets/portraits/federico-bio-bust.jpg" alt="Federico Gambedotti portrait" loading="lazy">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-copy">
+        <p class="home-kicker">Systems are choices, not inevitabilities.</p>
+        <h1 class="home-statement" id="home-title">
+          All systems that run our world were
+          <span class="home-word home-word-past">designed</span>
+          by someone. AI gives us the power to
+          <span class="home-word home-word-future">redesign</span>
+          them for everyone.
+        </h1>
+      </div>
+      <figure class="home-portrait">
+        <picture>
+          <source type="image/webp" srcset="assets/portraits/federico-bio-bust-480.webp 480w, assets/portraits/federico-bio-bust-960.webp 960w" sizes="(max-width: 760px) 52vw, 21vw">
+          <img src="assets/portraits/federico-bio-bust.jpg" alt="Federico Gambedotti" width="1200" height="1803" fetchpriority="high">
+        </picture>
       </figure>
-      <div class="about-copy">
-        <p class="about-text">I am a PhD researcher at UCL, writer, startup builder, and co-host of the 2Humans podcast. My work sits at the intersection of energy equity, flexibility markets, and institutional design. I study how technical systems shape social outcomes, and I share those ideas through weekly essays and public conversations. My goal is simple: help design systems that are more resilient, fair, and useful for everyone.</p>
-        <a href="about.html" class="about-cta">Read full profile →</a>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- QUOTE OF THE DAY -->
-  <section class="quote-wrapper reveal">
-    <div id="quote-section">
-      <div class="quote-loading">Loading today&rsquo;s note&hellip;</div>
-    </div>
-  </section>
+    <nav class="home-routes" aria-label="Explore Federico's work">
+      <a class="home-route" href="research.html">
+        <i class="ph ph-book-open-text" aria-hidden="true"></i>
+        <span>Research</span>
+        <small>Energy equity and flexibility</small>
+      </a>
+      <a class="home-route" href="building.html">
+        <i class="ph ph-cube" aria-hidden="true"></i>
+        <span>Building</span>
+        <small>Power Haven and experiments</small>
+      </a>
+      <a class="home-route" href="writing.html">
+        <i class="ph ph-pen-nib" aria-hidden="true"></i>
+        <span>Writing</span>
+        <small>Essays on systems and society</small>
+      </a>
+      <a class="home-route" href="podcast.html">
+        <i class="ph ph-microphone-stage" aria-hidden="true"></i>
+        <span>Podcast</span>
+        <small>Weekly debates on 2Humans</small>
+      </a>
+    </nav>
 
-  <!-- PILLARS -->
-  <section class="pillars stagger-children" id="work">
-    <a class="pillar pillar-link" href="research.html" id="research">
-      <span class="pillar-number">01</span>
-      <div class="pillar-title">Research</div>
-      <p class="pillar-desc">PhD exploring the intersection between energy equity, energy flexibility, and energy inclusion. I study the potential impact of energy communities in the UK energy transition.</p>
-      <span class="pillar-status">· Active — year 2 of 4</span>
-    </a>
-    <a class="pillar pillar-link" href="writing.html" id="writing">
-      <span class="pillar-number">02</span>
-      <div class="pillar-title">Writing</div>
-      <p class="pillar-desc">Weekly essays on energy, institutions, and the political choices hidden inside technical systems.</p>
-      <span class="pillar-status">· Weekly</span>
-    </a>
-    <a class="pillar pillar-link" href="building.html" id="building">
-      <span class="pillar-number">03</span>
-      <div class="pillar-title">Building</div>
-      <p class="pillar-desc">Startups, research projects, and open experiments built with AI. Some are active. Some are waiting for signal.</p>
-      <span class="pillar-vote-btn">Vote: choose what I build next →</span>
-      <span class="pillar-status">· Active</span>
-    </a>
-    <a class="pillar pillar-link" href="podcast.html" id="podcast">
-      <span class="pillar-number">04</span>
-      <div class="pillar-title">Podcast</div>
-      <p class="pillar-desc">Follow Ross Horlock and me on our podcast on AI and society. We host weekly debates on how the future could look and what we need to do today to make it resilient.</p>
-      <span class="pillar-status">· Weekly</span>
-    </a>
-  </section>
-
-  <!-- LIVE FEEDS -->
-  <div class="feeds-header reveal" id="feed">
-    <div class="feeds-title">Latest from the work</div>
-    <div class="live-badge"><div class="live-dot"></div> Live feed</div>
-  </div>
-
-  <div class="feed-grid reveal">
-    <div class="feed-col">
-      <div class="feed-col-header">
-        <span class="feed-col-label"><span class="label-icon icon-writing" aria-hidden="true"></span>Writing — Substack</span>
-        <a class="feed-col-link" href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">All posts →</a>
-      </div>
-      <div id="substack-feed">
-        <div class="skel-wrap">
-          <div class="skeleton" style="height:9px;width:55px;margin-bottom:8px"></div>
-          <div class="skeleton" style="height:14px;width:92%;margin-bottom:6px"></div>
-          <div class="skeleton" style="height:9px;width:70%"></div>
-        </div>
-      </div>
+    <div class="home-bottom">
+      <a href="about.html">About &amp; contact <span aria-hidden="true">↓</span></a>
+      <span>London · United Kingdom</span>
     </div>
-    <div class="feed-col">
-      <div class="feed-col-header">
-        <span class="feed-col-label"><span class="label-icon icon-podcast" aria-hidden="true"></span>Podcast — 2Humans</span>
-        <a class="feed-col-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">All episodes →</a>
-      </div>
-      <div id="podcast-feed">
-        <div class="skel-wrap">
-          <div class="skeleton" style="height:9px;width:55px;margin-bottom:8px"></div>
-          <div class="skeleton" style="height:14px;width:88%;margin-bottom:6px"></div>
-          <div class="skeleton" style="height:9px;width:40%"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- YOUTUBE -->
-  <div class="yt-section reveal-scale">
-    <div class="yt-header">
-      <span class="yt-label">Video — 2Humans on YouTube</span>
-      <a class="yt-link" href="https://www.youtube.com/playlist?list=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp" target="_blank" rel="noopener noreferrer">Visit playlist →</a>
-    </div>
-    <div class="yt-embed">
-      <iframe
-        id="yt-latest-video"
-        src="https://www.youtube.com/embed/VVCT0J3TH6Q?rel=0&modestbranding=1"
-        allowfullscreen
-        title="Latest 2Humans Podcast video on YouTube"
-        loading="lazy">
-      </iframe>
-    </div>
-  </div>
-
-  <!-- PODCAST EPISODES -->
-  <section class="episodes-section reveal" id="podcast-episodes">
-    <div class="episodes-header">
-      <span class="episodes-label"><span class="label-icon icon-podcast" aria-hidden="true"></span>Podcast Episodes — 2Humans</span>
-      <a class="episodes-link" href="https://podcasts.apple.com/gb/podcast/2humans-podcast/id1890864116" target="_blank" rel="noopener noreferrer">Browse all episodes →</a>
-    </div>
-    <div class="episodes-grid stagger-children" id="episode-cards">
-      <article class="episode-card-skeleton"></article>
-      <article class="episode-card-skeleton"></article>
-      <article class="episode-card-skeleton"></article>
-    </div>
-  </section>
-
-  <!-- SUBSCRIBE -->
-  <section class="subscribe reveal">
-    <div class="sub-left">
-      <div class="sub-headline">Follow the thinking as it develops.</div>
-      <p class="sub-desc">Weekly writing on energy, systems, and the politics of fairness. No noise — just the work.</p>
-    </div>
-    <div class="sub-right">
-      <form class="sub-form" id="sub-form" action="https://fedegam.substack.com/subscribe" method="get" target="_blank" novalidate>
-        <input class="sub-input" type="email" id="sub-email" name="email" placeholder="Your email address" aria-label="Email address" autocomplete="email" inputmode="email" required>
-        <button class="sub-btn" type="submit" id="sub-btn">Subscribe →</button>
-      </form>
-      <p class="sub-feedback" id="sub-feedback" aria-live="polite"></p>
-      <p class="sub-note">Delivered via <a href="https://fedegam.substack.com" target="_blank" rel="noopener noreferrer">Substack</a>. Free. Unsubscribe anytime.</p>
-      <div class="sub-callout">
-        <span class="sub-callout-title"><img class="sub-callout-icon" src="assets/icons/icon-call.png" alt="" aria-hidden="true">Let's take action — schedule a call</span>
-        <a class="sub-callout-link" href="https://calendly.com/ucbvfg0-ucl/30min" target="_blank" rel="noopener noreferrer">Book a 20 min meeting →</a>
-      </div>
-    </div>
-  </section>
-
   </main>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="footer-name">Federico Gambedotti</div>
-    <div class="footer-copy">© 2026 Federico Gambedotti</div>
-  </footer>
-  <div class="reach-line">
-    <span class="reach-intro">Contact:</span>
-    <a id="contact-email-link" data-user="ucbvfg0" data-domain="ucl.ac.uk" href="#">Email</a>
-    <span class="reach-sep" aria-hidden="true">·</span>
-    <a href="https://www.linkedin.com/in/federicogambedotti/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-    <span class="reach-sep" aria-hidden="true">·</span>
-    <a href="https://x.com/FedericoGambed2" target="_blank" rel="noopener noreferrer">X</a>
-  </div>
-
-  <script src="script.js"></script>
-  <script src="quotes.js"></script>
+  <script src="script.js?v=20260809"></script>
 </body>
 </html>
