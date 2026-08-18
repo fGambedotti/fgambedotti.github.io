@@ -32,7 +32,7 @@
     {
       "slug": "signal-ledger",
       "name": "Signal Ledger",
-      "description": "A focused crypto news feed for Bitcoin, Ethereum, and Solana using live market data and curated sources.",
+      "description": "A focused stock-news briefing with source-linked daily stories, company charts, and a calm reading workflow.",
       "status": "beta",
       "waitlistEnabled": true,
       "order": 20

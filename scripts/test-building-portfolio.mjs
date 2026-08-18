@@ -37,6 +37,9 @@ test('checked-in portfolio is valid and grouped without an empty Exploring secti
   assert.match(container.innerHTML, />Live</);
   assert.match(container.innerHTML, />Beta</);
   assert.doesNotMatch(container.innerHTML, />Exploring</);
+  const signalLedger = projects.find((project) => project.slug === 'signal-ledger');
+  assert.match(signalLedger.description, /stock-news briefing/i);
+  assert.doesNotMatch(signalLedger.description, /crypto|Bitcoin|Ethereum|Solana/i);
 });
 
 test('invalid public data is rejected instead of rendered', () => {
