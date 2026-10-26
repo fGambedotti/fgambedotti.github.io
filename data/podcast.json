@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-25T11:30:41.366Z",
+  "generatedAt": "2026-10-26T13:04:19.606Z",
   "source": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp",
   "items": [
     {
@@ -13,6 +13,12 @@
       "pubDate": "2026-08-16T18:01:06+00:00",
       "link": "https://www.youtube.com/watch?v=N8g-M0jgDkE",
       "thumbnail": "https://i.ytimg.com/vi/N8g-M0jgDkE/hqdefault.jpg"
+    },
+    {
+      "title": "We can now re-write DNA - but should we?",
+      "pubDate": "2026-08-16T17:19:48+00:00",
+      "link": "https://www.youtube.com/watch?v=SrF7CWlx0J4",
+      "thumbnail": "https://i.ytimg.com/vi/SrF7CWlx0J4/hqdefault.jpg"
     },
     {
       "title": "We can now re-write DNA - but should we?",
@@ -67,12 +73,6 @@
       "pubDate": "2026-04-18T07:38:41+00:00",
       "link": "https://www.youtube.com/watch?v=ZDc7Ec6MJ1A",
       "thumbnail": "https://i.ytimg.com/vi/ZDc7Ec6MJ1A/hqdefault.jpg"
-    },
-    {
-      "title": "Who Is Really Conscious? Exploring AI and Human Mind in a Philosophical Showdown [Part 1]",
-      "pubDate": "2026-04-18T07:00:31+00:00",
-      "link": "https://www.youtube.com/watch?v=Pi7S-bZsVJ8",
-      "thumbnail": "https://i.ytimg.com/vi/Pi7S-bZsVJ8/hqdefault.jpg"
     }
   ]
 }
