@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T14:23:51.527Z",
+  "generatedAt": "2026-11-12T15:16:28.567Z",
   "source": "https://www.youtube.com/feeds/videos.xml?playlist_id=PLGDbPqtiz-CSSgtcHHPJMgL1gUYAML-Fp",
   "items": [
     {
@@ -73,12 +73,6 @@
       "pubDate": "2026-05-26T12:59:09+00:00",
       "link": "https://www.youtube.com/watch?v=xiQ7OVlptos",
       "thumbnail": "https://i.ytimg.com/vi/xiQ7OVlptos/hqdefault.jpg"
-    },
-    {
-      "title": "The Future of Energy: fossil fuels vs nuclear vs renewable power",
-      "pubDate": "2026-05-13T13:30:10+00:00",
-      "link": "https://www.youtube.com/watch?v=6Of0ZA77T_0",
-      "thumbnail": "https://i.ytimg.com/vi/6Of0ZA77T_0/hqdefault.jpg"
     }
   ]
 }
